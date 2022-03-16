@@ -1,0 +1,230 @@
+.proposal-block {
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+.proposal-list {
+	width: 1030px;
+	margin-bottom: 40px;
+	overflow: hidden;
+}
+
+.proposal-list.scroll-pane {
+	max-height: 680px;
+}
+
+.proposal {
+	max-width: 1020px;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	padding: 15px 20px;
+	margin-bottom: 20px;
+	background: rgba(255, 255, 255, 0.05);
+	box-shadow: 0px 3px 5px rgba(0, 0, 0, 0.2);
+	backdrop-filter: blur(15px);
+	border-radius: 2px;
+	transition: all 0.3s;
+}
+
+.proposal:last-child {
+	margin-bottom: 0;
+}
+
+.proposal-list.scroll-pane .proposal {
+	margin-right: 20px;
+}
+
+.proposal .title {
+	width: 160px;
+	font-family: 'Syncopate', sans-serif;
+	font-weight: bold;
+	font-size: 15px;
+	color: #fff;
+}
+
+.proposal .rating-box {
+	width: 360px;
+	display: inline-flex;
+	justify-content: center;
+}
+
+.proposal .rating-box .like {
+	width: 180px;
+	color: #2BD071;
+	text-align: right;
+	padding-right: 25px;
+	margin-right: 20px;
+	background: url(/images/like-icon.svg) no-repeat 100% 50%;
+}
+
+.proposal .rating-box .unlike {
+	width: 180px;
+	color: #F24A4A;
+	padding-left: 25px;
+	margin-left: 20px;
+	position: relative;
+	background: url(/images/unlike-icon.svg) no-repeat 0 50%;
+}
+
+.proposal .rating-box .unlike::after {
+	content: '';
+	width: 1px;
+	height: 24px;
+	display: block;
+	position: absolute;
+	top: 50%; left: -20px;
+	background: linear-gradient(rgba(255,255,255,0) 0%, rgba(255,255,255,0.3) 25%, rgba(255,255,255,0.3) 50%, rgba(255,255,255,0) 100%);
+	transform: translateY(-50%);
+}
+
+.proposal .btn {
+	padding: 0 20px;
+}
+
+.proposal .btn.btn-success {
+	margin-right: 20px;
+}
+
+.proposal .btn.btn-outline-border i img {
+	width: 15px;
+}
+
+.proposal .time {
+	width: 100%;
+	max-width: 190px;
+	text-align: right;
+	padding-right: 20px;
+}
+
+.jspVerticalBar {
+	width: 3px;
+	z-index: 1;
+	background: none;
+}
+
+.jspTrack {
+	width: 1px;
+	background: rgba(255,255,255,0.1);
+}
+
+.jspDrag {
+	width: 3px;
+	margin-left: -1px;
+	background: #fff;
+	border-radius: 1px;
+}
+
+.jspContainer {
+	position: relative;
+}
+
+.jspContainer::after {
+	content: '';
+	width: calc(100% - 3px);
+	height: 100px;
+	display: block;
+	position: absolute;
+	bottom: 0; left: 0;
+	pointer-events: none;
+	background: linear-gradient(180deg, rgba(40, 40, 40, 0) 0%, #282828 100%);
+}
+
+@media screen and (max-width: 1240px) {
+
+	.proposal-list {
+		width: 100%;
+	}
+
+}
+
+@media screen and (max-width: 1023px) {
+
+	.proposal-list {
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: space-between;
+	}
+
+	.proposal {
+		width: calc((100% - 20px)/2);
+		flex-direction: column;
+		align-items: center;
+	}
+
+	.proposal .title,
+	.proposal .time {
+		width: 100%;
+		max-width: 100%;
+		text-align: center;
+	}
+
+	.proposal .rating-box,
+	.proposal .title {
+		padding-bottom: 15px;
+	}
+
+	.proposal .time {
+		text-align: center;
+		padding: 0 0 20px;
+	}
+
+	.proposal .btn {
+		width: 200px;
+	}
+
+	.proposal .btn.btn-success {
+		margin: 0 0 20px;
+	}
+
+	.proposal-list.scroll-pane .proposal {
+		width: calc((100% - 40px)/2);
+		margin: 0 10px 20px;
+	}
+	
+	.proposal-list .jspPane {
+		display: flex;
+		flex-wrap: wrap;
+		margin: 0 -10px;
+	}
+
+	.jspHorizontalBar {
+		display: none;
+	}
+
+}
+
+@media screen and (max-width: 767px) {
+
+	.proposal {
+		width: 100%;
+	}
+
+	.proposal .rating-box {
+		width: 100%;
+	}
+
+	.proposal-list .jspPane {
+		margin: 0;
+	}
+
+	.proposal-list.scroll-pane .proposal {
+		width: 100%;
+		margin: 0 0 20px 0;
+	}
+
+}
+
+@media screen and (max-width: 459px) {
+	.container {width: 280px;}
+}
+
+@media screen and (max-width: 767px) {
+
+	.proposal-list .proposal {
+		padding-right: 15px;
+	}
+
+}

@@ -3,6 +3,7 @@ import { useApi, useMember } from 'hooks';
 import { ReactComponent as Logo } from './images/logo.svg';
 import { Loader } from './components/Loader/Loader';
 import { Wallet } from './components/Wallet/Wallet';
+import { DAO } from './components/DAO/DAO';
 import './App.css';
 
 function App() {
@@ -24,7 +25,7 @@ function App() {
 
           <div className="main-section-content">
             <div className="container">
-              {isMember ? <p>Hello Member</p> : <p>Become Member</p>}
+              <DAO />
             </div>
           </div>
         </>
