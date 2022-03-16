@@ -228,3 +228,11 @@
 	}
 
 }
+
+.proposal-list .spiner-wrapper {
+    display: flex;
+    justify-content: center;
+    align-content: space-between;
+    align-items: center;
+    flex-direction: column;
+  }

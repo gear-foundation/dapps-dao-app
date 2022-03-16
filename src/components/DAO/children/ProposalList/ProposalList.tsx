@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useMember, useApi } from 'hooks';
 import { DAO_CONTRACT_ADDRESS } from 'consts';
+import { Spinner } from 'components/Spinner/Spinner';
 import voteIcon from 'images/vote-icon.svg';
 import moreInfoIcon from 'images/more-info-icon.svg';
 import daoMeta from 'out/dao.meta.wasm';
@@ -46,8 +47,6 @@ export const ProposalList = () => {
       .then((proposal) => setProposals(proposal));
   }, []);
 
-  console.log(proposals);
-
   return (
     <div className="proposal-block">
       <h4>Proposal list</h4>
@@ -75,7 +74,10 @@ export const ProposalList = () => {
             </a>
           </div>
         ) : (
-          <p>Loading proposals...</p>
+          <div className="spiner-wrapper">
+              <Spinner />
+          </div>
+          
         )}
       </div>
     </div>
