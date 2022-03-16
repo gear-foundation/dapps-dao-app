@@ -1,6 +1,6 @@
 import { web3FromSource } from '@polkadot/extension-dapp';
+import { InjectedAccountWithMeta } from '@polkadot/extension-inject/types';
 import { GearApi } from '@gear-js/api';
-import { UserAccount } from '../types/user';
 import { InjectedExtension } from '@polkadot/extension-inject/types';
 
 export const sendMessageToProgram = async (
@@ -9,15 +9,10 @@ export const sendMessageToProgram = async (
   gas: number,
   payload: any,
   types: any,
-  account: UserAccount,
+  account: InjectedAccountWithMeta,
   alert: any,
-  callback?: () => void,
+  callback?: () => void
 ) => {
-  if (account == null) {
-    alert.error(`Wallet not connected`);
-    return;
-  }
-
   const injector: InjectedExtension = await web3FromSource(account.meta.source);
 
   try {
@@ -62,7 +57,7 @@ export const sendMessageToProgram = async (
         if (data.status.isInvalid) {
           alert.error(`Invalid Transaction`);
         }
-      },
+      }
     );
   } catch (error) {
     alert.error(`${error}`);
