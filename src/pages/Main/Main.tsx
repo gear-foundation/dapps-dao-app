@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { Welcome } from './children';
-import { ProposalList } from './children';
+import { Welcome } from './children/index';
+import { ProposalList } from './children/index';
 
-const DAO = () => {
+const Main = () => {
 
   return (
     <>
@@ -12,4 +12,4 @@ const DAO = () => {
   );
 };
 
-export { DAO };
+export { Main };

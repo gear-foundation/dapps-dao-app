@@ -47,6 +47,8 @@ export const ProposalList = () => {
       .then((proposal) => setProposals(proposal));
   }, []);
 
+  console.log(proposals)
+
   return (
     <div className="proposal-block">
       <h4>Proposal list</h4>

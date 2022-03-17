@@ -1,14 +1,21 @@
-import React from 'react';
-import { useApi, useMember } from 'hooks';
+import React, { FC } from 'react';
+import {
+  BrowserRouter,
+  Route,
+  Routes,
+} from 'react-router-dom';
+import { useApi } from 'hooks';
 import { ReactComponent as Logo } from './images/logo.svg';
 import { Loader } from './components/Loader/Loader';
 import { Wallet } from './components/Wallet/Wallet';
-import { DAO } from './components/DAO/DAO';
+import { Main } from './pages/Main/Main';
+import { ProposalInfo } from './pages/ProposalInfo/ProposalInfo';
+
+import { routes } from 'routes';
 import './App.css';
 
-function App() {
+const AppComponent: FC = () => {
   const { isApiReady } = useApi();
-  const { isMember } = useMember();
 
   return (
     <div className="wrapper">
@@ -25,7 +32,10 @@ function App() {
 
           <div className="main-section-content">
             <div className="container">
-              <DAO />
+              <Routes>
+                <Route path={routes.main} element={<Main />} />
+                <Route path={routes.proposal} element={<ProposalInfo />} />
+              </Routes>
             </div>
           </div>
         </>
@@ -34,6 +44,10 @@ function App() {
       )}
     </div>
   );
-}
+};
 
-export default App;
+export const App = () => (
+  <BrowserRouter>
+    <AppComponent />
+  </BrowserRouter>
+);

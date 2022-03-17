@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import App from './App';
+import { App } from './App';
 import { ApiProvider } from './context/api';
 import { AccountProvider } from 'context/account';
 import { MemberProvider } from './context/member';
