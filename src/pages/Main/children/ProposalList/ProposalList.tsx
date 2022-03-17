@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useMember, useApi } from 'hooks';
 import { DAO_CONTRACT_ADDRESS } from 'consts';
+import { ProposalInfo, ContractResponse } from 'pages/types';
 import { Spinner } from 'components/Spinner/Spinner';
 import voteIcon from 'images/vote-icon.svg';
 import moreInfoIcon from 'images/more-info-icon.svg';
@@ -8,31 +9,11 @@ import daoMeta from 'out/dao.meta.wasm';
 
 import './ProposalList.scss';
 
-type proposalInfo = {
-  proposer: string;
-  applicant: string;
-  sharesRequested: string;
-  yesVotes: string;
-  noVotes: string;
-  quorum: string;
-  isMembershipProposal: boolean;
-  amount: string;
-  processed: boolean;
-  didPass: boolean;
-  cancelled: boolean;
-  aborted: boolean;
-  tokenTribute: string;
-  details: string;
-  startingPeriod: string;
-  maxTotalSharesAtYesVote: string;
-  votesByMember: string;
-};
-
 export const ProposalList = () => {
   const { isMember } = useMember();
   const { api } = useApi();
 
-  const [proposals, setProposals] = useState<proposalInfo | null>(null);
+  const [proposals, setProposals] = useState<ProposalInfo | null>(null);
 
   useEffect(() => {
     fetch(daoMeta)
@@ -43,11 +24,11 @@ export const ProposalList = () => {
           ProposalInfo: '1',
         }),
       )
-      .then((state) => state.toHuman() as proposalInfo)
-      .then((proposal) => setProposals(proposal));
+      .then((state) => state.toHuman() as ContractResponse)
+      .then(({ ProposalInfo }) => setProposals(ProposalInfo));
   }, []);
 
-  console.log(proposals)
+  console.log(proposals);
 
   return (
     <div className="proposal-block">
@@ -77,9 +58,8 @@ export const ProposalList = () => {
           </div>
         ) : (
           <div className="spiner-wrapper">
-              <Spinner />
+            <Spinner />
           </div>
-          
         )}
       </div>
     </div>
