@@ -9,6 +9,7 @@ import { ReactComponent as Logo } from './images/logo.svg';
 import { Loader } from './components/Loader/Loader';
 import { Wallet } from './components/Wallet/Wallet';
 import { Main } from './pages/Main/Main';
+import { AdminPanel } from './pages/AdminPanel/AdminPanel';
 import { ProposalDetails } from './pages/ProposalDetails/ProposalDetails';
 
 import { routes } from 'routes';
@@ -35,6 +36,7 @@ const AppComponent: FC = () => {
               <Routes>
                 <Route path={routes.main} element={<Main />} />
                 <Route path={routes.proposal} element={<ProposalDetails />} />
+                <Route path={routes.admin} element={<AdminPanel />} />
               </Routes>
             </div>
           </div>

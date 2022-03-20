@@ -27,6 +27,10 @@ const ProposalDetails = () => {
       .then(({ ProposalInfo }) => setProposal(ProposalInfo));
   }, []);
 
+  if(proposal){
+    console.log(proposal)
+  }
+
   return (
     <>
       {proposal ? (

@@ -18,8 +18,14 @@ export type ProposalInfo = {
   votesByMember: string;
 };
 
-export type ProposalKeys = { [key: string]: ProposalInfo }
-
 export type ContractResponse = {
   ProposalInfo: ProposalInfo;
+};
+
+export type AllProposalResponse = {
+  AllProposals: AllProposal | {};
+};
+
+export type AllProposal = {
+  [key: string]: ProposalInfo;
 };
