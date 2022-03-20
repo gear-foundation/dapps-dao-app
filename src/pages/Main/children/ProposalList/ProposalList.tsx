@@ -32,9 +32,6 @@ export const ProposalList = () => {
       .then(({ AllProposals }) => setProposals(AllProposals));
   }, []);
 
-  if (proposals) {
-    console.log(proposals);
-  }
   // Vote for specific Proposal
   const HandleVote = (event: React.MouseEvent, proposalID: string) => {
     event.preventDefault();
