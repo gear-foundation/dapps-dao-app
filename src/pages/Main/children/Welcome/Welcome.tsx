@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useStatus } from 'hooks';
+import { MemberModal } from 'components/MemberModal/MemberModal'
 
 import memberIcon from 'images/member-icon.svg';
 import './Welcome.scss';
@@ -28,13 +29,13 @@ export const Welcome = () => {
 
       {isMember || isAdmin ? (
         <div className="btn-line">
-          <a href="#" className="btn btn-success" onClick={openModal}>
+          <a href="#" className="btn btn-success">
             Submit Proposal
           </a>
         </div>
       ) : (
         <div className="btn-line">
-          <a href="#" className="btn btn-success">
+          <a href="#" className="btn btn-success" onClick={openModal}>
             <i>
               <img src={memberIcon} alt=""></img>
             </i>
@@ -42,6 +43,7 @@ export const Welcome = () => {
           </a>
         </div>
       )}
+      {isModalOpen &&  <MemberModal closeModal={closeModal}/>}
     </header>
   );
 };

@@ -19,11 +19,13 @@ const Modal = ({ children, caption, close }: Props) => {
   const component = (
     <div className="modal-overlay" onClick={handlOverlayClick}>
       <div className="modal">
-        {caption && <h2 className="modal__caption">{caption}</h2>}
-        <button className="modal__close-button" onClick={close}>
-          <X />
-        </button>
-        <div className="modal__body">{children}</div>
+        <div className="modal-block">
+          {caption && <h3 className="modal__caption">{caption}</h3>}
+          <button className="modal__close-button" onClick={close}>
+            <X />
+          </button>
+          <div className="modal__body">{children}</div>
+        </div>
       </div>
     </div>
   );

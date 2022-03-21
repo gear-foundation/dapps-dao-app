@@ -1,0 +1,109 @@
+.modal-block h3,
+.modal-block p {
+	text-align: center;
+}
+
+.modal-block h3 {
+	font-size: 23px;
+	padding-bottom: 15px;
+}
+
+.modal-block p {
+	font-size: 17px;
+	line-height: 25px;
+}
+
+.modal-block p:last-child {
+	padding-bottom: 0;
+}
+
+.modal-block p + form {
+	padding-top: 5px;
+}
+
+.modal-block form {
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	padding-top: 15px;
+}
+
+.modal-block .form-row {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	padding-bottom: 20px;
+}
+
+
+.modal-block .form-row .form-holder {
+	padding: 0;
+}
+
+.modal-block .form-holder {
+	width: 100%;
+	padding-bottom: 20px;
+}
+
+.modal-block input {
+	width: 100%;
+	font-family: 'Prompt', sans-serif;
+	font-weight: 300;
+	font-size: 15px;
+	color: #fff;
+	line-height: 25px;
+	padding: 11px 20px 13px;
+	border: none;
+	background: #121212;
+	border-radius: 2px;
+}
+
+.modal-block .btn.btn-success {
+	width: 100%;
+}
+
+.modal-block .modal-body {
+	width: 100%;
+	padding: 40px;
+}
+
+.modal-block .balance-info {
+	font-size: 15px;
+	text-align: center;
+	padding-bottom: 10px;
+}
+
+.modal-block .balance-info span {
+	font-weight: 600;
+	font-size: 17px;
+	color: #fff;
+}
+
+.modal-block.long .btn {
+	max-width: 200px;
+}
+
+@media screen and (max-width: 599px) {
+
+	.modal-block .form-row {
+		width: 100%;
+		flex-direction: column;
+	}
+
+}
+
+@media screen and (max-width: 599px) { 
+
+	.modal-block .modal-body {
+		padding: 40px 20px;
+	}
+
+	.modal-block.long .btn {
+		max-width: 100%;
+	}
+
+}
+
+/* end modal */
