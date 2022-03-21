@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 
-import { useMember, useApi } from 'hooks';
+import { useStatus, useApi } from 'hooks';
 import { useAlert } from 'react-alert';
 import { DAO_CONTRACT_ADDRESS } from 'consts';
 import { NoProposals } from './children/NoProposals/NoProposals';
@@ -13,7 +13,7 @@ import daoMeta from 'out/dao.meta.wasm';
 import './ProposalList.scss';
 
 export const ProposalList = () => {
-  const { isMember } = useMember();
+  const { userStatus: { isMember} } = useStatus();
   const { api } = useApi();
   const alert = useAlert();
 

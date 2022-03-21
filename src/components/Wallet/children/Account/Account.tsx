@@ -1,9 +1,9 @@
-import React, {useEffect } from 'react';
+import React, { useEffect } from 'react';
 import Identicon from '@polkadot/react-identicon';
 import { GearKeyring } from '@gear-js/api';
 import { ReactComponent as Logout } from 'images/logout.svg';
 import { LOCAL_STORAGE, DAO_CONTRACT_ADDRESS } from 'consts';
-import { useAccount, useMember, useApi } from 'hooks';
+import { useAccount, useStatus, useApi } from 'hooks';
 import { useBalance } from './hooks';
 import daoMeta from 'out/dao.meta.wasm';
 
@@ -14,14 +14,21 @@ type Props = {
   closeModal: () => void;
 };
 
-type Member = {
-  IsMember: boolean;
+type UserStatusResponse = {
+  UserStatus: userStatus;
+};
+
+type userStatus = {
+  isAdmin: boolean;
+  isMember: boolean;
+  isInWaitlist: boolean;
+  waitForDecision: boolean;
 };
 
 const Account = ({ openModal, closeModal }: Props) => {
   const { api } = useApi();
   const { account, setAccount } = useAccount();
-  const { setIsMember } = useMember();
+  const { setUserStatus } = useStatus();
 
   const balance = useBalance();
 
@@ -48,13 +55,12 @@ const Account = ({ openModal, closeModal }: Props) => {
         .then((arrayBuffer) => Buffer.from(arrayBuffer))
         .then((buffer) =>
           api.programState.read(DAO_CONTRACT_ADDRESS, buffer, {
-            IsMember: `${addressRaw}`,
+            UserStatus: `${addressRaw}`,
           }),
         )
-        .then((state) => state.toHuman() as Member)
-        .then(({IsMember}) => setIsMember(IsMember))
+        .then((state) => state.toHuman() as UserStatusResponse)
+        .then(({ UserStatus }) => setUserStatus(UserStatus));
     }
-
   }, [api, account]);
 
   return (

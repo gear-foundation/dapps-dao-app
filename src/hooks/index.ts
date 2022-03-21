@@ -1,10 +1,10 @@
 import { useContext } from 'react';
 import { ApiContext } from 'context/api';
 import { AccountContext } from 'context/account';
-import { MemberContext } from 'context/member';
+import { UserStatusContext } from 'context/status';
 
 const useApi = () => useContext(ApiContext);
 const useAccount = () => useContext(AccountContext);
-const useMember = () => useContext(MemberContext);
+const useStatus = () => useContext(UserStatusContext);
 
-export { useApi, useAccount, useMember };
+export { useApi, useAccount, useStatus };

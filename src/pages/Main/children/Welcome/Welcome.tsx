@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
-import { useMember } from 'hooks';
+import { useStatus } from 'hooks';
 
 import memberIcon from 'images/member-icon.svg';
 import './Welcome.scss';
 
 export const Welcome = () => {
-  const { isMember } = useMember();
+  const {
+    userStatus: { isMember, isAdmin },
+  } = useStatus();
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const openModal = () => {
@@ -24,7 +26,7 @@ export const Welcome = () => {
         platform based on a system of smart contracts and GEAR platform.
       </p>
 
-      {isMember ? (
+      {isMember || isAdmin ? (
         <div className="btn-line">
           <a href="#" className="btn btn-success" onClick={openModal}>
             Submit Proposal
@@ -40,7 +42,6 @@ export const Welcome = () => {
           </a>
         </div>
       )}
-
     </header>
   );
 };

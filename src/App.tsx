@@ -1,6 +1,6 @@
 import React, { FC } from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import { useApi, useMember } from 'hooks';
+import { useApi, useStatus } from 'hooks';
 import { ReactComponent as Logo } from './images/logo.svg';
 import { Loader } from './components/Loader/Loader';
 import { Wallet } from './components/Wallet/Wallet';
@@ -14,7 +14,8 @@ import './App.css';
 
 const AppComponent: FC = () => {
   const { isApiReady } = useApi();
-  const { isMember } = useMember();
+  const { userStatus } = useStatus();
+  const { isAdmin } = userStatus;
 
   return (
     <div className="wrapper">
@@ -30,7 +31,7 @@ const AppComponent: FC = () => {
           </section>
 
           <div className="main-section-content">
-            {isMember && <AdminLink />}
+            {isAdmin && <AdminLink />}
             <div className="container">
               <Routes>
                 <Route path={routes.main} element={<Main />} />

@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import { App } from './App';
 import { ApiProvider } from './context/api';
 import { AccountProvider } from 'context/account';
-import { MemberProvider } from './context/member';
+import { UserStatusProvider } from './context/status';
 import { transitions, positions, Provider as AlertProvider } from 'react-alert';
 import { AlertTemplate } from './components/AlertTemplate';
 
@@ -18,11 +18,11 @@ ReactDOM.render(
   <React.StrictMode>
     <ApiProvider>
       <AccountProvider>
-        <MemberProvider>
+        <UserStatusProvider>
           <AlertProvider template={AlertTemplate} {...options}>
             <App />
           </AlertProvider>
-        </MemberProvider>
+        </UserStatusProvider>
       </AccountProvider>
     </ApiProvider>
   </React.StrictMode>,
