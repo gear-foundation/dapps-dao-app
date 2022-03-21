@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+
 import { useMember, useApi } from 'hooks';
 import { useAlert } from 'react-alert';
 import { DAO_CONTRACT_ADDRESS } from 'consts';
+import { NoProposals } from './children/NoProposals/NoProposals';
+import { Proposal } from './children/Proposal/Proposal';
 import { AllProposal, AllProposalResponse } from 'pages/types';
 import { Spinner } from 'components/Spinner/Spinner';
-import voteIcon from 'images/vote-icon.svg';
-import moreInfoIcon from 'images/more-info-icon.svg';
+
 import daoMeta from 'out/dao.meta.wasm';
 
 import './ProposalList.scss';
@@ -51,40 +52,10 @@ export const ProposalList = () => {
       <div className="proposal-list scroll-pane">
         {proposals ? (
           <>
-            {Object.entries(proposals).map(
-              ([proposalID, { yesVotes, noVotes }], index) => {
-                return (
-                  <div className="proposal" key={index}>
-                    <div className="title">Proposal {proposalID}</div>
-                    <div className="rating-box">
-                      <div className="like">{yesVotes}</div>
-                      <div className="unlike">{noVotes}</div>
-                    </div>
-                    <div className="time">Expires in 5 days</div>
-                    <a
-                      href="#"
-                      className="btn btn-success btn-sm"
-                      onClick={(event) => {
-                        HandleVote(event, proposalID);
-                      }}
-                    >
-                      <i>
-                        <img src={voteIcon} alt=""></img>
-                      </i>
-                      Vote
-                    </a>
-                    <Link
-                      to={`proposal/${proposalID}`}
-                      className="btn btn-outline-border btn-sm"
-                    >
-                      <i>
-                        <img src={moreInfoIcon} alt=""></img>
-                      </i>
-                      More info
-                    </Link>
-                  </div>
-                );
-              },
+            {Object.keys(proposals).length === 0 ? (
+              <NoProposals />
+            ) : (
+              <Proposal proposals={proposals} handleVote={HandleVote} />
             )}
           </>
         ) : (

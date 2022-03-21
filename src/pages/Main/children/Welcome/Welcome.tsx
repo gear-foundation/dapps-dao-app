@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { useMember } from 'hooks';
-import { ProposalModal } from 'components/SubmitProposal/SubmitProposal';
 
 import memberIcon from 'images/member-icon.svg';
 import './Welcome.scss';
@@ -42,7 +41,6 @@ export const Welcome = () => {
         </div>
       )}
 
-      {isModalOpen && <ProposalModal closeModal={closeModal} />}
     </header>
   );
 };
