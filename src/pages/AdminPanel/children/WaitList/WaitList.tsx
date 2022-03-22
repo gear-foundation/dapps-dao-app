@@ -15,7 +15,7 @@ const WaitList = ({ list, handlePropose }: Props) => {
         ([applicant, tokenTribute], index) => {
           return (
             <div className="waitlist-item" key={applicant}>
-              <div className="tribute">{tokenTribute} DAO</div>
+              <div className="tokenTribute">{tokenTribute} DAO</div>
               <div className="applicant">{toShortAddress(applicant)}</div>
               <a
                 href="#"

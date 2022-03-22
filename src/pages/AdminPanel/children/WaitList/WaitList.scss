@@ -22,7 +22,7 @@
   margin-bottom: 0;
 }
 
-.waitlist-item .tribute {
+.waitlist-item .tokenTribute {
   width: 160px;
   font-family: 'Syncopate', sans-serif;
   font-weight: bold;
@@ -64,14 +64,14 @@
     align-items: center;
   }
 
-  .waitlist-item .tribute,
+  .waitlist-item .tokenTribute,
   .waitlist-item .applicant {
     width: 100%;
     max-width: 100%;
     text-align: center;
   }
 
-  .waitlist-item .tribute {
+  .waitlist-item .tokenTribute {
     padding-bottom: 15px;
   }
 

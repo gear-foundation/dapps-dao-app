@@ -2,17 +2,18 @@ import React, { useEffect, useState } from 'react';
 import { Spinner } from 'components/Spinner/Spinner';
 import { WaitList } from './children/WaitList/WaitList';
 import { NoWaitList } from './children/NoWaitList/NoWaitList';
-
-import { DAO_CONTRACT_ADDRESS } from 'consts';
+import { DAO_CONTRACT_ADDRESS, REGISTRY_TYPES } from 'consts';
 import { WaitListPrespons, WaitListType } from './types';
-import { useApi, useStatus } from 'hooks';
+import { useApi, useStatus, useAccount } from 'hooks';
+import { sendMessageToProgram } from 'service/SendMessage';
 import { useAlert } from 'react-alert';
 
 import daoMeta from 'out/dao.meta.wasm';
 
 const AdminPanel = () => {
-  const { api } = useApi();
   const alert = useAlert();
+  const { api } = useApi();
+  const { account } = useAccount();
   const {
     userStatus: { isMember, isAdmin },
   } = useStatus();
@@ -32,10 +33,27 @@ const AdminPanel = () => {
       return;
     }
 
-    console.log({
-      applicant,
-      tokenTribute,
-    });
+    if (account) {
+      sendMessageToProgram(
+        api,
+        DAO_CONTRACT_ADDRESS,
+        300_000_000,
+        {
+          SubmitMembershipProposal: {
+            applicant,
+            tokenTribute: tokenTribute.replaceAll(',', ''),
+            sharesRequested: tokenTribute.replaceAll(',', ''),
+            quorum: '3',
+            details: `Membership proposal for ${applicant}`,
+          },
+        },
+        { handle_input: 'DaoAction', types: REGISTRY_TYPES },
+        account,
+        alert,
+      );
+    } else {
+      alert.error('Wallet not connected');
+    }
   };
 
   useEffect(() => {

@@ -23,6 +23,8 @@ export const sendMessageToProgram = async (
       value: 0,
     };
 
+    console.log(payload)
+
     await api.message.submit(message, types);
   } catch (error) {
     console.error(`${error}`);

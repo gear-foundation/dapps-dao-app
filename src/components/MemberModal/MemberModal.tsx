@@ -56,4 +56,4 @@ const MemberModal = ({ closeModal }: Props) => {
   );
 };
 
-export { MemberModal };
+export { MemberModal }
