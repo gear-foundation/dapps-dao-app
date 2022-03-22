@@ -28,7 +28,6 @@ const MemberModal = ({ closeModal }: Props) => {
     }
 
     if (account) {
-      console.log('here');
       sendMessageToProgram(
         api,
         DAO_CONTRACT_ADDRESS,

@@ -1,46 +1,81 @@
 import React, { useEffect, useState } from 'react';
 import { Spinner } from 'components/Spinner/Spinner';
+import { WaitList } from './children/WaitList/WaitList';
+import { NoWaitList } from './children/NoWaitList/NoWaitList';
+
 import { DAO_CONTRACT_ADDRESS } from 'consts';
-import { useApi } from 'hooks';
+import { WaitListPrespons, WaitListType } from './types';
+import { useApi, useStatus } from 'hooks';
+import { useAlert } from 'react-alert';
+
 import daoMeta from 'out/dao.meta.wasm';
 
 const AdminPanel = () => {
   const { api } = useApi();
+  const alert = useAlert();
+  const {
+    userStatus: { isMember, isAdmin },
+  } = useStatus();
 
-  const [waitList, setWaitList] = useState<any | null>(null);
+  const [waitList, setWaitList] = useState<WaitListType | null>(null);
+
+  // Init membership proposal for new candidate
+  const handlePropose = (
+    event: React.MouseEvent,
+    applicant: string,
+    tokenTribute: string,
+  ) => {
+    event.preventDefault();
+
+    if (!isMember) {
+      alert.error('Only members can make proposal');
+      return;
+    }
+
+    console.log({
+      applicant,
+      tokenTribute,
+    });
+  };
 
   useEffect(() => {
-    const readState = async () => {
-      const response = await fetch(daoMeta);
-      const arrayBuffer = await response.arrayBuffer();
-      const buffer = await Buffer.from(arrayBuffer);
- 
-      const decodedWaitlist = await api.programState.read(
-        DAO_CONTRACT_ADDRESS,
-        buffer,
-        {
+    fetch(daoMeta)
+      .then((res) => res.arrayBuffer())
+      .then((arrayBuffer) => Buffer.from(arrayBuffer))
+      .then((buffer) =>
+        api.programState.read(DAO_CONTRACT_ADDRESS, buffer, {
           WaitList: 'Null',
-        },
-      );
-
-      const waitList = await decodedWaitlist.toHuman();
-      console.log(waitList);
-    };
-
-    readState();
+        }),
+      )
+      .then((state) => state.toHuman() as WaitListPrespons)
+      .then(({ WaitList }) => setWaitList(WaitList));
   }, []);
 
   return (
     <>
-      {waitList ? (
+      {isAdmin ? (
         <>
-          <header>
-            <h2>Welcome to admin panel</h2>
-          </header>
-          <div className="proposal-info-block"></div>
+          {waitList ? (
+            <div className="admin-block">
+              <header>
+                <h2>Welcome to admin panel</h2>
+              </header>
+              <div className="waitlist">
+                <>
+                  {Object.keys(waitList).length === 0 ? (
+                    <NoWaitList />
+                  ) : (
+                    <WaitList list={waitList} handlePropose={handlePropose} />
+                  )}
+                </>
+              </div>
+            </div>
+          ) : (
+            <Spinner />
+          )}
         </>
       ) : (
-        <Spinner />
+        <p>Permission denied</p>
       )}
     </>
   );

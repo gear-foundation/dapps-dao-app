@@ -1,7 +1,7 @@
 export type WaitListPrespons = {
-    WaitList: WaitList
+    WaitList: WaitListType
 }
 
-export type WaitList = {
+export type WaitListType = {
     [key: string]: string
 }
