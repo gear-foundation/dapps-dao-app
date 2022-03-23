@@ -1,0 +1,29 @@
+.proposal-status {
+   display: flex;
+   color: #ffffff;
+
+   span {
+    padding: 0 10px;
+    margin-left: 10px;
+   }
+}
+.proposal-status.voting span {
+    background: #2e3bc9;
+}
+
+.proposal-status.canceled span {
+    background: #3d3d3d;
+} 
+
+.proposal-status.processed span {
+    background: #3d3d3d;
+} 
+
+.proposal-status.passed span {
+    background: #2bd071;
+} 
+
+.proposal-status.aborded span {
+    background: #bd2222;
+} 
+

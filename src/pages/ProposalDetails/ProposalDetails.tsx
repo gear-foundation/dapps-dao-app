@@ -1,12 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { Spinner } from 'components/Spinner/Spinner';
+import { ProposalItems } from './children/ProposalItems/ProposalItems';
+import { ProposalStatus } from './children/ProposalStatus/ProposalStatus';
+import { Title } from './children/Title/Title';
 import { ContractResponse, ProposalInfo } from 'pages/types';
 import { DAO_CONTRACT_ADDRESS } from 'consts';
 import { useApi } from 'hooks';
-import daoMeta from 'out/dao.meta.wasm';
 
 import './ProposalDetails.scss'
+import daoMeta from 'out/dao.meta.wasm';
 
 const ProposalDetails = () => {
   const { api } = useApi();
@@ -27,30 +30,23 @@ const ProposalDetails = () => {
       .then(({ ProposalInfo }) => setProposal(ProposalInfo));
   }, []);
 
-  if(proposal){
-    console.log(proposal)
+  if (proposal) {
+    console.log(proposal);
   }
 
   return (
     <>
       {proposal ? (
         <>
-          <header>
-            <h2>{proposal.isMembershipProposal ? "Membership proposal" : "Funding proposal"}</h2>
-            
-          </header>
-          <div className="proposal-info-block">
-            {Object.entries(proposal).map(([key, value], index) => {
-              if (typeof value === 'string' || typeof value === 'boolean') {
-                return (
-                  <div className="row" key={index}>
-                    <div className="title">{key}</div>
-                    <div className="proposal-info">{value.toString()}</div>
-                  </div>
-                );
-              }
-            })}
+          <div className="proposal-header">
+            <Title
+              isMembershipProposal={proposal.isMembershipProposal}
+              proposalId={ProposalId}
+            />
+            <ProposalStatus proposal={proposal} />
           </div>
+
+          <ProposalItems proposal={proposal} />
         </>
       ) : (
         <Spinner />

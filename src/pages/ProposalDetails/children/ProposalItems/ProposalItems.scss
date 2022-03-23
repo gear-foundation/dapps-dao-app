@@ -1,0 +1,57 @@
+.proposal-info-block {
+    max-width: 980px;
+    width: 100%;
+    background-color: #212121;
+    border: 1px dashed #0e0e0e;
+    border-radius: 2px;
+    margin: 0 0 40px;
+    padding: 30px 25px;
+  }
+  
+  .proposal-info-block .row {
+    display: flex;
+    color: #fff;
+    padding-bottom: 20px;
+  }
+  
+  .proposal-info-block .row:last-child {
+    padding-bottom: 0;
+  }
+  
+  .proposal-info-block .row .title {
+    align-items: center;
+    color: #858585;
+    display: flex;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    min-width: 200px;
+  }
+  
+  .proposal-info-block .row .proposal-info {
+    width: 100%;
+    font-size: 15px;
+    line-height: 25px;
+    padding: 11px 20px 13px;
+    background: rgba(255, 255, 255, 0.05);
+    box-shadow: 0px 3px 5px rgba(0, 0, 0, 0.2);
+    backdrop-filter: blur(15px);
+    border-radius: 2px;
+  }
+  
+  @media screen and (max-width: 767px) {
+    .proposal-info-block .row {
+      flex-direction: column;
+    }
+  
+    .proposal-info-block .row .title {
+      max-width: 100%;
+      text-align: left;
+    }
+  
+    .proposal-info-block .row .proposal-info {
+      position: relative;
+      overflow: hidden;
+    }
+  }
+  
