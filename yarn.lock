@@ -1151,6 +1151,11 @@
   resolved "https://registry.yarnpkg.com/@gear-js/api/-/api-0.14.2.tgz#40af2dfd8b6730d378b5199dcf7b8fa245184701"
   integrity sha512-pO8BAWgQ5dfHhHoe4XNFWIEP0MFAU4dQ6JMFvQKkDQ5qen+SkdaqVaoJOwmcafr4ARAUTa5gg5WZe2a1lCF1xg==
 
+"@gear-js/ui@^0.0.2":
+  version "0.0.2"
+  resolved "https://registry.yarnpkg.com/@gear-js/ui/-/ui-0.0.2.tgz#48ec8633457d0b487f0f4b72f1b36df32036626b"
+  integrity sha512-dSPlclOS3h5Q8RPWC/w5jMXJJflm+7wYgj6q6N8L3FNJVGt0FVmDhPMqym0hvkvK8cdVhtjwuB+sI3Cod7k0sA==
+
 "@humanwhocodes/config-array@^0.9.2":
   version "0.9.2"
   resolved "https://registry.npmjs.org/@humanwhocodes/config-array/-/config-array-0.9.2.tgz"
