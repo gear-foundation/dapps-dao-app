@@ -4,13 +4,13 @@ import { Spinner } from 'components/Spinner/Spinner';
 import { ProposalItems } from './children/ProposalItems/ProposalItems';
 import { ProposalStatus } from './children/ProposalStatus/ProposalStatus';
 import { Title } from './children/Title/Title';
-import { BackButton } from 'components/BackButton/BackButton'
+import { BackButton } from 'components/BackButton/BackButton';
 import { ContractResponse, ProposalInfo } from 'pages/types';
 import { DAO_CONTRACT_ADDRESS } from 'consts';
 import { useApi } from 'hooks';
 
-import './ProposalDetails.scss'
 import daoMeta from 'out/dao.meta.wasm';
+import './ProposalDetails.scss';
 
 const ProposalDetails = () => {
   const { api } = useApi();
@@ -29,7 +29,7 @@ const ProposalDetails = () => {
       )
       .then((state) => state.toHuman() as ContractResponse)
       .then(({ ProposalInfo }) => setProposal(ProposalInfo));
-  }, []);
+  }, [ProposalId]);
 
   if (proposal) {
     console.log(proposal);

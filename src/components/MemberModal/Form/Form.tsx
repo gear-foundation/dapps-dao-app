@@ -5,10 +5,10 @@ import { useDaoBalance } from 'components/hooks';
 import './Form.scss';
 
 type Props = {
-  HandleSubmit: (event: React.MouseEvent<HTMLElement>, amount: string) => void;
+  handleSubmit: (event: React.MouseEvent<HTMLElement>, amount: string) => void;
 };
 
-const Form = ({ HandleSubmit }: Props) => {
+const Form = ({ handleSubmit }: Props) => {
   const daoBalance = useDaoBalance();
   const [amount, setAmount] = useState<null | string>(null);
 
@@ -28,7 +28,7 @@ const Form = ({ HandleSubmit }: Props) => {
         className="btn btn-success"
         onClick={(event) => {
           if (amount) {
-            HandleSubmit(event, amount);
+            handleSubmit(event, amount);
           }
         }}
       >

@@ -17,7 +17,7 @@ const MemberModal = ({ closeModal }: Props) => {
 
   const [isSubmited, setIsSubmited] = useState(false);
 
-  const HandleSubmit = (
+  const handleSubmit = (
     event: React.MouseEvent<HTMLElement>,
     amount: string,
   ) => {
@@ -50,7 +50,7 @@ const MemberModal = ({ closeModal }: Props) => {
       {isSubmited ? (
         <p>Thank you for your participation, please wait for confirmation</p>
       ) : (
-        <Form HandleSubmit={HandleSubmit} />
+        <Form handleSubmit={handleSubmit} />
       )}
     </Modal>
   );
