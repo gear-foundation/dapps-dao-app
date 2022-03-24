@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { useStatus } from 'hooks';
 import { MemberModal } from 'components/MemberModal/MemberModal'
-
 import memberIcon from 'images/member-icon.svg';
 import './Welcome.scss';
 

@@ -1,0 +1,42 @@
+.vote-modal__form {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding-top: 15px;
+}
+
+.vote-modal__form .member-modal__balance {
+  width: 100%;
+  padding-bottom: 20px;
+  font-size: 15px;
+  text-align: center;
+}
+
+.vote-modal__form .balance-info span {
+  font-weight: 600;
+  font-size: 17px;
+  color: #fff;
+}
+
+.vote-modal__radio {
+    display: flex;
+    align-items: center;
+    margin: 20px 0;
+    justify-content: space-between;
+    width: 130px;
+
+}
+
+.vote-modal__radio input {
+    text-align: none;
+}
+
+.vote-modal__form .btn.btn-success {
+  width: 100%;
+}
+
+.vote-modal__form.long .btn {
+  max-width: 200px;
+}

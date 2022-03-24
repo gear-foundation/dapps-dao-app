@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Spinner } from 'components/Spinner/Spinner';
 
-import { useDaoBalance } from '../hooks';
+import { useDaoBalance } from 'components/hooks';
 
 import './Form.scss';
 
@@ -14,11 +14,11 @@ const Form = ({ HandleSubmit }: Props) => {
   const [amount, setAmount] = useState<null | string>(null);
 
   return (
-    <form action="#">
-      <div className="balance-info">
+    <form className="member-modal__form">
+      <div className="member-modal__balance">
         Your Balance: <span>{daoBalance ? daoBalance : <Spinner />}</span>
       </div>
-      <div className="form-holder">
+      <div className="member-modal__amount">
         <input
           type="text"
           placeholder="Enter tokens"
