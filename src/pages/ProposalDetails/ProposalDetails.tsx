@@ -4,6 +4,7 @@ import { Spinner } from 'components/Spinner/Spinner';
 import { ProposalItems } from './children/ProposalItems/ProposalItems';
 import { ProposalStatus } from './children/ProposalStatus/ProposalStatus';
 import { Title } from './children/Title/Title';
+import { BackButton } from 'components/BackButton/BackButton'
 import { ContractResponse, ProposalInfo } from 'pages/types';
 import { DAO_CONTRACT_ADDRESS } from 'consts';
 import { useApi } from 'hooks';
@@ -39,6 +40,7 @@ const ProposalDetails = () => {
       {proposal ? (
         <>
           <div className="proposal-header">
+            <BackButton />
             <Title
               isMembershipProposal={proposal.isMembershipProposal}
               proposalId={ProposalId}

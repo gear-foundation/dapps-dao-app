@@ -1,4 +1,4 @@
-import './Title.scss'
+import './Title.scss';
 
 type Props = {
   isMembershipProposal: boolean;
@@ -8,7 +8,8 @@ type Props = {
 const Title = ({ isMembershipProposal, proposalId }: Props) => {
   return (
     <span className="proposal-title">
-      {isMembershipProposal ? 'Membership proposal' : 'Funding proposal'} #{proposalId}
+      {isMembershipProposal ? 'Membership proposal' : 'Funding proposal'} #
+      {proposalId}
     </span>
   );
 };
