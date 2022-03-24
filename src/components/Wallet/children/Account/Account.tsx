@@ -5,6 +5,7 @@ import { ReactComponent as Logout } from 'images/logout.svg';
 import { LOCAL_STORAGE, DAO_CONTRACT_ADDRESS } from 'consts';
 import { useAccount, useStatus, useApi } from 'hooks';
 import { useBalance } from './hooks';
+import { useDaoBalance } from 'components/hooks';
 import daoMeta from 'out/dao.meta.wasm';
 
 import './Account.scss';
@@ -31,6 +32,7 @@ const Account = ({ openModal, closeModal }: Props) => {
   const { setUserStatus } = useStatus();
 
   const balance = useBalance();
+  const daoBalance = useDaoBalance();
 
   const logOut = () => {
     setAccount(undefined);
@@ -67,7 +69,9 @@ const Account = ({ openModal, closeModal }: Props) => {
     <div className="user-wallet__wrapper">
       {account ? (
         <>
-          <div className="user-wallet__balance">{balance}</div>
+          <div className="user-wallet__balance">
+            {balance} / {daoBalance} DAO
+          </div>
           <button
             type="button"
             className="user-wallet__user-info"

@@ -5,7 +5,6 @@ import { useAccounts } from './hooks';
 import { isLoggedIn } from './utils';
 import { Account, AccountsModal } from './children';
 
-
 const Wallet = () => {
   const { setAccount } = useAccount();
   const accounts = useAccounts();
@@ -13,7 +12,6 @@ const Wallet = () => {
 
   useEffect(() => {
     if (accounts) setAccount(accounts.find(isLoggedIn));
-    
   }, [accounts, setAccount]);
 
   const openModal = () => {

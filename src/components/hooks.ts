@@ -2,8 +2,8 @@ import { useEffect, useState } from 'react';
 import { ERC20_CONTRACT_ADDRESS } from 'consts';
 import { GearKeyring } from '@gear-js/api';
 import { daoBalanceResponse } from './types';
-import erc20Meta from 'out/fungible_token.meta.wasm';
 import { useApi, useAccount } from 'hooks';
+import erc20Meta from 'out/fungible_token.meta.wasm';
 
 export const useDaoBalance = () => {
   const { api } = useApi();

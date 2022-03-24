@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { Spinner } from 'components/Spinner/Spinner';
-
 import { useDaoBalance } from 'components/hooks';
 
 import './Form.scss';
