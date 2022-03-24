@@ -1,22 +1,25 @@
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { AllProposal } from 'pages/types';
 import voteIcon from 'images/vote-icon.svg';
 import moreInfoIcon from 'images/more-info-icon.svg';
+
 import './Proposal.scss';
 
 type Props = {
+  handleVote: (event: React.MouseEvent, proposalID: string) => void,
   proposals: AllProposal;
-  handleVote: (event: React.MouseEvent, proposalID: string) => void;
 };
 
 const Proposal = ({ proposals, handleVote }: Props) => {
+
   return (
     <>
       {Object.entries(proposals).map(
-        ([proposalID, { yesVotes, noVotes }], index) => {
+        ([proposalId, { yesVotes, noVotes }], index) => {
           return (
             <div className="proposal" key={index}>
-              <div className="title">Proposal {proposalID}</div>
+              <div className="title">Proposal #{proposalId}</div>
               <div className="rating-box">
                 <div className="like">{yesVotes}</div>
                 <div className="unlike">{noVotes}</div>
@@ -25,17 +28,18 @@ const Proposal = ({ proposals, handleVote }: Props) => {
               <a
                 href="#"
                 className="btn btn-success btn-sm"
-                onClick={(event) => {
-                  handleVote(event, proposalID);
-                }}
+                onClick={((event) => {
+                  handleVote(event, proposalId)
+                })}
               >
                 <i>
                   <img src={voteIcon} alt=""></img>
                 </i>
                 Vote
               </a>
+              
               <Link
-                to={`proposal/${proposalID}`}
+                to={`proposal/${proposalId}`}
                 className="btn btn-outline-border btn-sm"
               >
                 <i>
