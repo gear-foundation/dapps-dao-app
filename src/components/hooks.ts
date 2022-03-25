@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { ERC20_CONTRACT_ADDRESS } from 'consts';
 import { GearKeyring } from '@gear-js/api';
-import { daoBalanceResponse } from './types';
+import { DaoBalanceResponse } from './types';
 import { useApi, useAccount } from 'hooks';
 import erc20Meta from 'out/fungible_token.meta.wasm';
 
@@ -24,7 +24,7 @@ export const useDaoBalance = () => {
             BalanceOf: `${addressRaw}`,
           }),
         )
-        .then((state) => state.toHuman() as daoBalanceResponse)
+        .then((state) => state.toHuman() as DaoBalanceResponse)
         .then(({ Balance }) => setDaoBalance(Balance));
     }
   }, [api, account]);

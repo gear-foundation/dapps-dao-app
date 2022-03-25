@@ -4,6 +4,7 @@ import { GearKeyring } from '@gear-js/api';
 import { ReactComponent as Logout } from 'images/logout.svg';
 import { LOCAL_STORAGE, DAO_CONTRACT_ADDRESS } from 'consts';
 import { useAccount, useStatus, useApi } from 'hooks';
+import { UserStatusResponse } from 'components/types';
 import { useBalance } from './hooks';
 import { useDaoBalance } from 'components/hooks';
 import daoMeta from 'out/dao.meta.wasm';
@@ -13,17 +14,6 @@ import './Account.scss';
 type Props = {
   openModal: () => void;
   closeModal: () => void;
-};
-
-type UserStatusResponse = {
-  UserStatus: userStatus;
-};
-
-type userStatus = {
-  isAdmin: boolean;
-  isMember: boolean;
-  isInWaitlist: boolean;
-  waitForDecision: boolean;
 };
 
 const Account = ({ openModal, closeModal }: Props) => {

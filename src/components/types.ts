@@ -1,5 +1,16 @@
-type daoBalanceResponse = {
+type DaoBalanceResponse = {
   Balance: string;
 };
 
-export type { daoBalanceResponse };
+type UserStatusResponse = {
+  UserStatus: userStatus;
+};
+
+type userStatus = {
+  isAdmin: boolean;
+  isMember: boolean;
+  isInWaitlist: boolean;
+  waitForDecision: boolean;
+};
+
+export type { DaoBalanceResponse, UserStatusResponse };
