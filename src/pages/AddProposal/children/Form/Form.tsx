@@ -13,7 +13,7 @@ type Props = {
 };
 
 const Form = ({ handleSubmit }: Props) => {
-  const [proposalType, setProposalType] = useState<string>('member');
+  const [proposalType, setProposalType] = useState<string>('membership');
 
   const [values, setValues] = useState<ProposalValues>({
     applicant: '',
@@ -41,10 +41,10 @@ const Form = ({ handleSubmit }: Props) => {
     <form className="add-proposal__form">
       <div className="add-proposal__radio">
         <Radio
-          label="Member proposal"
-          value="member"
+          label="Membership proposal"
+          value="membership"
           onChange={handleRadioChange}
-          checked={proposalType === 'member'}
+          checked={proposalType === 'membership'}
           name="type"
         />
         <Radio
@@ -62,7 +62,7 @@ const Form = ({ handleSubmit }: Props) => {
           value={values.applicant}
           onChange={handleInputChange}
         />
-        {proposalType === 'member' ? (
+        {proposalType === 'membership' ? (
           <>
             <Input
               label="TokenTribute (type: u128)"
