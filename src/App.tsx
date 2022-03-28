@@ -7,6 +7,7 @@ import { Wallet } from './components/Wallet/Wallet';
 import { AdminLink } from './components/AdminLink/AdminLink';
 import { Main } from './pages/Main/Main';
 import { AdminPanel } from './pages/AdminPanel/AdminPanel';
+import { AddProposal } from './pages/AddProposal/AddProposal';
 import { ProposalDetails } from './pages/ProposalDetails/ProposalDetails';
 
 import { routes } from 'routes';
@@ -37,6 +38,7 @@ const AppComponent: FC = () => {
                 <Route path={routes.main} element={<Main />} />
                 <Route path={routes.proposal} element={<ProposalDetails />} />
                 <Route path={routes.admin} element={<AdminPanel />} />
+                <Route path={routes.add} element={<AddProposal />} />
               </Routes>
             </div>
           </div>

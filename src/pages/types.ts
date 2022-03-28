@@ -29,3 +29,12 @@ export type AllProposalResponse = {
 export type AllProposal = {
   [key: string]: ProposalInfo;
 };
+
+export type ProposalValues = {
+  applicant: string;
+  amount: string;
+  tokenTribute: string;
+  sharesRequested: string;
+  quorum: string;
+  details: string;
+};

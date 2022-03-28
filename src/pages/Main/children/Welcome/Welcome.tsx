@@ -28,7 +28,7 @@ export const Welcome = () => {
 
       {isMember || isAdmin ? (
         <div className="btn-line">
-          <a href="#" className="btn btn-success">
+          <a href="/add" className="btn btn-success">
             Submit Proposal
           </a>
         </div>
