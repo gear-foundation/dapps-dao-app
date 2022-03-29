@@ -1,7 +1,7 @@
 import { useApi, useStatus, useAccount } from 'hooks';
 import { sendMessageToProgram } from 'service/SendMessage';
-import { ProposalValues } from 'pages/types';
 import { DAO_CONTRACT_ADDRESS, REGISTRY_TYPES } from 'consts';
+import { ProposalValues } from 'pages/types';
 import { Form } from './children/Form/Form';
 import { useAlert } from 'react-alert';
 
