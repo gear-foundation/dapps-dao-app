@@ -14,6 +14,7 @@ export type ProposalInfo = {
   tokenTribute: string;
   details: string;
   startingPeriod: string;
+  endedAt: string;
   maxTotalSharesAtYesVote: string;
   votesByMember: string;
 };

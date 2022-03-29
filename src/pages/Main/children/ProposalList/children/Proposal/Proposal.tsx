@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { toDate } from 'utils'
 import { AllProposal } from 'pages/types';
 import voteIcon from 'images/vote-icon.svg';
 import moreInfoIcon from 'images/more-info-icon.svg';
@@ -16,7 +17,7 @@ const Proposal = ({ proposals, handleVote }: Props) => {
   return (
     <>
       {Object.entries(proposals).map(
-        ([proposalId, { yesVotes, noVotes }], index) => {
+        ([proposalId, { yesVotes, noVotes, endedAt }], index) => {
           return (
             <div className="proposal" key={index}>
               <div className="title">Proposal #{proposalId}</div>
@@ -24,7 +25,7 @@ const Proposal = ({ proposals, handleVote }: Props) => {
                 <div className="like">{yesVotes}</div>
                 <div className="unlike">{noVotes}</div>
               </div>
-              <div className="time">Expires in 5 days</div>
+              <div className="time">Expires: {toDate(endedAt)}</div>
               <a
                 href="#"
                 className="btn btn-success btn-sm"
