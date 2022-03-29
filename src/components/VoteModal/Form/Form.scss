@@ -21,16 +21,15 @@
 }
 
 .vote-modal__radio {
-    display: flex;
-    align-items: center;
-    margin: 20px 0;
-    justify-content: space-between;
-    width: 130px;
-
+  display: flex;
+  align-items: center;
+  margin: 20px 0;
+  justify-content: space-between;
+  width: 130px;
 }
 
 .vote-modal__radio input {
-    text-align: none;
+  text-align: none;
 }
 
 .vote-modal__form .btn.btn-success {

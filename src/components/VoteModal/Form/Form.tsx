@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Spinner } from 'components/Spinner/Spinner';
-import { Radio } from '@gear-js/ui';
+import { Radio, Button } from '@gear-js/ui';
 import { useDaoBalance } from 'components/hooks';
 
 import './Form.scss';
@@ -38,14 +38,13 @@ const Form = ({ handleSubmit }: Props) => {
           name="vote"
         />
       </div>
-      <button
+      <Button
+        text="Submit"
         className="btn btn-success"
         onClick={(event) => {
           handleSubmit(event, selectedValue);
         }}
-      >
-        Submit
-      </button>
+      />
     </form>
   );
 };
