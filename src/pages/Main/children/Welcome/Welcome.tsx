@@ -25,7 +25,7 @@ export const Welcome = () => {
     <header className="welcome">
       <h1>The DAO</h1>
       <p>
-        Welcome to the example of DAO (Decentralized Autonomous Organization)
+        Welcome to the example of DAO (Decentralized Autonomous Organization)<br />
         implementation based on Gear platform.
       </p>
 
