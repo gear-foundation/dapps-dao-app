@@ -1,6 +1,6 @@
 import { web3FromSource } from '@polkadot/extension-dapp';
 import { InjectedAccountWithMeta } from '@polkadot/extension-inject/types';
-import { GearApi } from '@gear-js/api';
+import { GearApi, GearKeyring, getWasmMetadata } from '@gear-js/api';
 import { InjectedExtension } from '@polkadot/extension-inject/types';
 
 export const sendMessageToProgram = async (
@@ -11,7 +11,7 @@ export const sendMessageToProgram = async (
   types: any,
   account: InjectedAccountWithMeta,
   alert: any,
-  callback?: () => void
+  callback?: () => void,
 ) => {
   const injector: InjectedExtension = await web3FromSource(account.meta.source);
 
@@ -23,7 +23,7 @@ export const sendMessageToProgram = async (
       value: 0,
     };
 
-    console.log(payload)
+    console.log(payload);
 
     await api.message.submit(message, types);
   } catch (error) {
@@ -59,10 +59,36 @@ export const sendMessageToProgram = async (
         if (data.status.isInvalid) {
           alert.error(`Invalid Transaction`);
         }
-      }
+      },
     );
   } catch (error) {
     alert.error(`${error}`);
     console.error('transaction failed', error);
   }
+};
+
+export const calculateGas = async (
+  api: any,
+  address: string,
+  programId: string,
+  payload: any,
+  metaFile: any,
+) => {
+  const addressRaw = GearKeyring.decodeAddress(address);
+
+
+  const gas = await fetch(metaFile)
+    .then((res) => res.arrayBuffer())
+    .then((arrayBuffer) => Buffer.from(arrayBuffer))
+    .then((buffer) => getWasmMetadata(buffer))
+    .then((metaData: any) =>
+      api.program.gasSpent.handle(
+        addressRaw,
+        programId,
+        payload,
+        metaData,
+      ),
+    );
+
+    console.log(gas)
 };
