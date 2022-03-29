@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Spinner } from 'components/Spinner/Spinner';
+import { Input, Button } from '@gear-js/ui';
 import { useDaoBalance } from 'components/hooks';
 
 import './Form.scss';
@@ -18,22 +19,20 @@ const Form = ({ handleSubmit }: Props) => {
         Your Balance: <span>{daoBalance ? daoBalance : <Spinner />}</span>
       </div>
       <div className="member-modal__amount">
-        <input
-          type="text"
+        <Input
           placeholder="Enter tokens"
           onChange={(event) => setAmount(event.target.value)}
         />
       </div>
-      <button
+      <Button
+        text="Submit"
         className="btn btn-success"
         onClick={(event) => {
           if (amount) {
             handleSubmit(event, amount);
           }
         }}
-      >
-        Submit
-      </button>
+      />
     </form>
   );
 };
