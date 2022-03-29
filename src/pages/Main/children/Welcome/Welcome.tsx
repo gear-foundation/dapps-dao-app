@@ -9,7 +9,7 @@ import './Welcome.scss';
 
 export const Welcome = () => {
   const {
-    userStatus: { isMember, isAdmin,  },
+    userStatus: { isMember, isAdmin },
   } = useStatus();
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -25,8 +25,8 @@ export const Welcome = () => {
     <header className="welcome">
       <h1>The DAO</h1>
       <p>
-        Digital decentralized autonomous organization, which is a crowdfunding
-        platform based on a system of smart contracts and GEAR platform.
+        Welcome to the example of DAO (Decentralized Autonomous Organization)
+        implementation based on Gear platform.
       </p>
 
       <div className="btn-line">
