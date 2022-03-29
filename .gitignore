@@ -16,9 +16,6 @@ contract/target/
 contract/Cargo.lock
 contract/.cargo
 
-#out
-/src/out
-
 # misc
 .DS_Store
 .env.local
