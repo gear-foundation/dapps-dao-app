@@ -39,7 +39,7 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Build and push Frontend Docker image
+      - name: Build and push Dao Docker image
         uses: docker/build-push-action@master
         with:
           push: true
