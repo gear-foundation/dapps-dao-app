@@ -9,27 +9,29 @@ type Props = {
 };
 
 const ProposalStatus = ({
-  proposal: { cancelled, didPass, processed, aborted },
+  proposal: { cancelled, didPass, aborted },
 }: Props) => {
   const [status, setStatus] = useState<string>();
 
   const STATUS = Object.freeze({
     IN_VOTE: 'voting',
-    CANCELED: 'canceled',
+    CANCELED: 'cancelled',
     PASSED: 'passed',
-    PROCESSED: 'processed',
     ABORDED: 'aborded',
   });
 
   useEffect(() => {
     if (cancelled) setStatus(STATUS.CANCELED);
-    else if (didPass) setStatus(STATUS.CANCELED);
-    else if (processed) setStatus(STATUS.CANCELED);
-    else if (aborted) setStatus(STATUS.CANCELED);
+    else if (didPass) setStatus(STATUS.PASSED);
+    else if (aborted) setStatus(STATUS.ABORDED);
     else setStatus(STATUS.IN_VOTE);
   }, []);
 
-  return <div className={clsx(`proposal-status`, status)}>Status: <span>{status}</span></div>
+  return (
+    <div className={clsx(`proposal-status`, status)}>
+      Status: <span>{status}</span>
+    </div>
+  );
 };
 
 export { ProposalStatus };
