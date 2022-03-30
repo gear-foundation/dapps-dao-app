@@ -1,9 +1,12 @@
 import { useApi, useStatus, useAccount } from 'hooks';
 import { sendMessageToProgram } from 'service/SendMessage';
+import { BackButton } from 'components/BackButton/BackButton';
 import { DAO_CONTRACT_ADDRESS, REGISTRY_TYPES } from 'consts';
 import { ProposalValues } from 'pages/types';
 import { Form } from './children/Form/Form';
 import { useAlert } from 'react-alert';
+
+import './AddProposal.scss';
 
 const AddProposal = () => {
   const alert = useAlert();
@@ -79,9 +82,11 @@ const AddProposal = () => {
     <>
       {isMember ? (
         <div className="add-proposal__block">
-          <header>
-            <h2>Make new proposal</h2>
-          </header>
+          <div className="add-proposal__header">
+            <BackButton />
+            <span className="add-proposal__title">Make new proposal</span>
+          </div>
+
           <Form handleSubmit={handlePropose} />
         </div>
       ) : (
