@@ -25,7 +25,6 @@ const VoteModal = ({ closeModal, proposalId }: Props) => {
       sendMessageToProgram(
         api,
         DAO_CONTRACT_ADDRESS,
-        300_000_000,
         {
           SubmitVote: {
             proposalId,

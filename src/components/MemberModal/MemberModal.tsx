@@ -31,7 +31,6 @@ const MemberModal = ({ closeModal }: Props) => {
       sendMessageToProgram(
         api,
         DAO_CONTRACT_ADDRESS,
-        300_000_000,
         { RequestForMembership: amount },
         { handle_input: 'DaoAction', types: REGISTRY_TYPES },
         account,

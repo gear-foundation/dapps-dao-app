@@ -1,10 +1,12 @@
 import { useApi, useStatus, useAccount } from 'hooks';
-import { sendMessageToProgram } from 'service/SendMessage';
+import { sendMessageToProgram, calculateGas } from 'service/SendMessage';
 import { BackButton } from 'components/BackButton/BackButton';
 import { DAO_CONTRACT_ADDRESS, REGISTRY_TYPES } from 'consts';
 import { ProposalValues } from 'pages/types';
 import { Form } from './children/Form/Form';
 import { useAlert } from 'react-alert';
+
+import daoMeta from 'out/dao.meta.wasm';
 
 import './AddProposal.scss';
 
@@ -64,10 +66,10 @@ const AddProposal = () => {
     }
 
     if (account) {
+      const estimatedGas = calculateGas(api, account!.address, DAO_CONTRACT_ADDRESS, payload!,daoMeta);
       sendMessageToProgram(
         api,
         DAO_CONTRACT_ADDRESS,
-        300_000_000,
         payload!,
         { handle_input: 'DaoAction', types: REGISTRY_TYPES },
         account,

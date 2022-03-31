@@ -37,7 +37,6 @@ const AdminPanel = () => {
       sendMessageToProgram(
         api,
         DAO_CONTRACT_ADDRESS,
-        300_000_000,
         {
           SubmitMembershipProposal: {
             applicant,
