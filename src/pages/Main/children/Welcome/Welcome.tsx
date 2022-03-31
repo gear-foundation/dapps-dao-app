@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { useStatus } from 'hooks';
+import { useStatus, useAccount } from 'hooks';
+import { useAlert } from 'react-alert';
 import { Button } from '@gear-js/ui';
 import { Link } from 'react-router-dom';
 import { MemberModal } from 'components/MemberModal/MemberModal';
@@ -9,8 +10,10 @@ import './Welcome.scss';
 
 export const Welcome = () => {
   const {
-    userStatus: { isMember, isAdmin },
+    userStatus: { isMember },
   } = useStatus();
+  const { account } = useAccount();
+  const alert = useAlert();
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const openModal = () => {
@@ -25,7 +28,8 @@ export const Welcome = () => {
     <header className="welcome">
       <h1>The DAO</h1>
       <p>
-        Welcome to the example of DAO (Decentralized Autonomous Organization)<br />
+        Welcome to the example of DAO (Decentralized Autonomous Organization)
+        <br />
         implementation based on Gear platform.
       </p>
 
@@ -38,7 +42,10 @@ export const Welcome = () => {
           <Button
             text="Become a member"
             className="btn btn-success"
-            onClick={openModal}
+            onClick={() => {
+              if (account) openModal();
+              else alert.error('Wallet not connected');
+            }}
             icon={memberIcon}
           />
         )}
