@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Radio, Input, Button } from '@gear-js/ui';
-import { ProposalValues } from 'pages/types'
+import { ProposalValues } from 'pages/types';
 
 import './Form.scss';
 
@@ -10,9 +10,10 @@ type Props = {
     type: string,
     payload: ProposalValues,
   ) => void;
+  inProgress: boolean;
 };
 
-const Form = ({ handleSubmit }: Props) => {
+const Form = ({ handleSubmit, inProgress }: Props) => {
   const [proposalType, setProposalType] = useState<string>('membership');
 
   const [values, setValues] = useState<ProposalValues>({
@@ -101,7 +102,8 @@ const Form = ({ handleSubmit }: Props) => {
 
       <Button
         className="btn btn-success"
-        text="Submit"
+        text={inProgress ? '...Broadcasting' : 'Submit'}
+        disabled={inProgress}
         onClick={(event) => handleSubmit(event, proposalType, values)}
       />
     </form>

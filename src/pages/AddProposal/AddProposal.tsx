@@ -1,12 +1,11 @@
+import { useState } from 'react';
 import { useApi, useStatus, useAccount } from 'hooks';
-import { sendMessageToProgram, calculateGas } from 'service/SendMessage';
+import { sendMessageToProgram } from 'service/SendMessage';
 import { BackButton } from 'components/BackButton/BackButton';
 import { DAO_CONTRACT_ADDRESS, REGISTRY_TYPES } from 'consts';
 import { ProposalValues } from 'pages/types';
 import { Form } from './children/Form/Form';
 import { useAlert } from 'react-alert';
-
-import daoMeta from 'out/dao.meta.wasm';
 
 import './AddProposal.scss';
 
@@ -17,6 +16,9 @@ const AddProposal = () => {
   const {
     userStatus: { isMember },
   } = useStatus();
+
+  const [isSubmited, setIsSubmited] = useState(false);
+  const [inProgress, setInProgress] = useState(false);
 
   // Submit proposal (Membership or Funding)
   const handlePropose = (
@@ -66,6 +68,7 @@ const AddProposal = () => {
     }
 
     if (account) {
+      setInProgress(true);
       sendMessageToProgram(
         api,
         DAO_CONTRACT_ADDRESS,
@@ -73,6 +76,9 @@ const AddProposal = () => {
         { handle_input: 'DaoAction', types: REGISTRY_TYPES },
         account,
         alert,
+        () => {
+          setIsSubmited(true);
+        },
       );
     } else {
       alert.error('Wallet not connected');
@@ -87,8 +93,11 @@ const AddProposal = () => {
             <BackButton />
             <span className="add-proposal__title">Make new proposal</span>
           </div>
-
-          <Form handleSubmit={handlePropose} />
+          {isSubmited ? (
+            <div className="center">Your proposal has been submitted.</div>
+          ) : (
+            <Form handleSubmit={handlePropose} inProgress={inProgress} />
+          )}
         </div>
       ) : (
         <p>Only members able to create proposals</p>
