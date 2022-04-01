@@ -47,7 +47,7 @@ const MemberModal = ({ closeModal }: Props) => {
   return (
     <Modal caption="become a member" close={closeModal}>
       {isSubmited ? (
-        <p>Thank you for your participation, please wait for confirmation</p>
+        <div className="center">Thank you for your participation, please wait for confirmation</div>
       ) : (
         <Form handleSubmit={handleSubmit} />
       )}

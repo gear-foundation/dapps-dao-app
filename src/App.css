@@ -329,3 +329,7 @@ header p + .btn-line {
 }
 
 /*end header section*/
+
+.center {
+	text-align: center;
+}

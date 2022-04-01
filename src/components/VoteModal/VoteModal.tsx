@@ -46,7 +46,7 @@ const VoteModal = ({ closeModal, proposalId }: Props) => {
   return (
     <Modal caption={`Vote for proposal ${proposalId}`} close={closeModal}>
       {isSubmited ? (
-        <p>Thank you for your Vote!</p>
+        <div className="center">Thank you for your Vote!</div>
       ) : (
         <Form handleSubmit={handleSubmit} />
       )}
