@@ -7,9 +7,10 @@ import './Form.scss';
 
 type Props = {
   handleSubmit: (event: React.MouseEvent<HTMLElement>, amount: string) => void;
+  inProgress: boolean;
 };
 
-const Form = ({ handleSubmit }: Props) => {
+const Form = ({ handleSubmit, inProgress }: Props) => {
   const daoBalance = useDaoBalance();
   const [amount, setAmount] = useState<null | string>(null);
 
@@ -25,7 +26,8 @@ const Form = ({ handleSubmit }: Props) => {
         />
       </div>
       <Button
-        text="Submit"
+        text={inProgress ? "...Broadcasting" : "Submit"}
+        disabled={inProgress}
         className="btn btn-success"
         onClick={(event) => {
           if (amount) {
