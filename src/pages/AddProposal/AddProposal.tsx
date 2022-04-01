@@ -66,7 +66,6 @@ const AddProposal = () => {
     }
 
     if (account) {
-      const estimatedGas = calculateGas(api, account!.address, DAO_CONTRACT_ADDRESS, payload!,daoMeta);
       sendMessageToProgram(
         api,
         DAO_CONTRACT_ADDRESS,
