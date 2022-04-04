@@ -47,9 +47,9 @@ const MemberModal = ({ closeModal }: Props) => {
   };
 
   return (
-    <Modal caption="become a member" close={closeModal}>
+    <Modal caption="Request membership" close={closeModal}>
       {isSubmited ? (
-        <div className="center">Thank you for your participation, please wait for confirmation</div>
+        <div className="center">Your request has been submitted, please wait for confirmation from DAO administrator and completion of the voting on the membership proposal.</div>
       ) : (
         <Form handleSubmit={handleSubmit} inProgress={inProgress}/>
       )}
