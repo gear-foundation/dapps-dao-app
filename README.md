@@ -1,22 +1,14 @@
-# Gear Application boilerplate
+# Gear DAO dApp
 
-[![Gitpod Ready-to-Code](https://img.shields.io/badge/Gitpod-Ready--to--Code-blue?logo=gitpod)](https://gitpod.io/#https://github.com/gear-tech/create-gear-app)
+[![Gitpod Ready-to-Code](https://img.shields.io/badge/Gitpod-Ready--to--Code-blue?logo=gitpod)](https://gitpod.io/#https://github.com/gear-tech/dao-app)
 
-A ready-made application template with a well-thought-out infrastructure for quickly turning the application on [Gear](https://www.gear-tech.io/) blockchain.
+Decentralized Autonomous Organization (DAO) operates without central authority or control. It is community-driven and all the decisions are made through proposals in which different members are required to vote.
 
-# Features
+It's Ready-to-Use application based on two different smart-contracts:
 
-- Configured app ready to use with @gear-js/@polkadot-js library
-- Gear Api Context
-- User Context
-- Wallet component (Integration with Polkadot-js extension)
-- Alert component
-- SendMessage to program service
-- Read State service
-- Build contract script
-- Read meta types script
-- Gear contract example on Rust (Guestbook)
-- Gear dApp frontend example (Guesbook)
+- Fundible Token [https://github.com/gear-tech/apps/tree/master/fungible-token](https://github.com/gear-tech/apps/tree/master/fungible-token) which permit to create utility token `DAO`
+- DAO contract (https://github.com/gear-tech/apps/tree/master/dao)[https://github.com/gear-tech/apps/tree/master/dao]
+
 
 # Getting Started
 
@@ -24,24 +16,24 @@ Configure basic dApp in .env:
 
 ```shell
 REACT_APP_NETWORK
-REACT_APP_CONTRACT_ADDRESS
+REACT_APP_CONTRACT_ERC
+REACT_APP_CONTRACT_DAO
 REACT_APP_REGISTRY_TYPES
 ```
 
 - `REACT_APP_NETWORK` is Gear network address (wss://rpc-node.gear-tech.io:443)
-- `REACT_APP_CONTRACT_ADDRESS` is Gear contract address
-- `REACT_APP_REGISTRY_TYPES` is registry types for encode/decode data
+- `REACT_APP_CONTRACT_ERC` is Fundible Token contract address
+- `RREACT_APP_CONTRACT_DAO` is DAO contract address
+- `REACT_APP_REGISTRY_TYPES` is registry types of DAO for encode/decode data
 
-To get `types` run:
+An example is available: [here](https://github.com/gear-tech/dao-app/blob/master/.env.example)
+
+## To run
+
+To install required dependencies:
 
 ```shell
-yarn run build:contract
-```
-
-`opt.wasm` and `meta.wasm` files should appear in `src/out`
-
-```shell
-yarn run build:types
+yarn
 ```
 
 To run:
