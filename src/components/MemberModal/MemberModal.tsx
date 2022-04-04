@@ -16,6 +16,7 @@ const MemberModal = ({ closeModal }: Props) => {
   const alert = useAlert();
 
   const [isSubmited, setIsSubmited] = useState(false);
+  const [inProgress, setInProgress] = useState(false);
 
   const handleSubmit = (
     event: React.MouseEvent<HTMLElement>,
@@ -28,6 +29,7 @@ const MemberModal = ({ closeModal }: Props) => {
     }
 
     if (account) {
+      setInProgress(true);
       sendMessageToProgram(
         api,
         DAO_CONTRACT_ADDRESS,
@@ -49,7 +51,7 @@ const MemberModal = ({ closeModal }: Props) => {
       {isSubmited ? (
         <div className="center">Thank you for your participation, please wait for confirmation</div>
       ) : (
-        <Form handleSubmit={handleSubmit} />
+        <Form handleSubmit={handleSubmit} inProgress={inProgress}/>
       )}
     </Modal>
   );
