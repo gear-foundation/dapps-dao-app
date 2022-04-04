@@ -2,7 +2,7 @@
 
 [![Gitpod Ready-to-Code](https://img.shields.io/badge/Gitpod-Ready--to--Code-blue?logo=gitpod)](https://gitpod.io/#https://github.com/gear-tech/dao-app)
 
-Decentralized Autonomous Organization (DAO) operates without central authority or control. It is community-driven and all the decisions are made throw proposals in which different members are required to vote.
+Decentralized Autonomous Organization (DAO) operates without central authority or control. It is community-driven and all the decisions are made through proposals in which different members are required to vote.
 
 It's Ready-to-Use application based on two different smart-contracts:
 
