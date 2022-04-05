@@ -4,6 +4,7 @@ import { useApi, useStatus } from 'hooks';
 import { ReactComponent as Logo } from './images/logo.svg';
 import { Loader } from './components/Loader/Loader';
 import { Wallet } from './components/Wallet/Wallet';
+import { MintButton } from './components/MintButton/MintButton';
 import { AdminLink } from './components/AdminLink/AdminLink';
 import { Main } from './pages/Main/Main';
 import { AdminPanel } from './pages/AdminPanel/AdminPanel';
@@ -27,6 +28,7 @@ const AppComponent: FC = () => {
               <a href="/" className="logo">
                 <Logo />
               </a>
+              <MintButton />
               <Wallet />
             </div>
           </section>

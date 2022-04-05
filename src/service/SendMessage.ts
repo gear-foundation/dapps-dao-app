@@ -91,7 +91,7 @@ export const calculateGas = async (
     .catch((error) => console.log(error));
 };
 
-const getMeta = async (metaFile: string) => {
+export const getMeta = async (metaFile: string) => {
   return await fetch(metaFile)
     .then((res) => res.arrayBuffer())
     .then((arrayBuffer) => Buffer.from(arrayBuffer))

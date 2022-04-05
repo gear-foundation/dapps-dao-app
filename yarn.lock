@@ -1147,9 +1147,9 @@
     strip-json-comments "^3.1.1"
 
 "@gear-js/api@^0.15.2":
-  version "0.15.2"
-  resolved "https://registry.yarnpkg.com/@gear-js/api/-/api-0.15.2.tgz#8d87e1593c49e6b975681dac82ba6faadb0c6337"
-  integrity sha512-YnTc0SRoDYu3CK1LaJlGTrIsoCMVg6m3PO1vXmgFBUnWRG+DWA7kz9Enrp3w4Cz2nGFCOGM9d/vGIvvGdnM7ug==
+  version "0.15.3"
+  resolved "https://registry.yarnpkg.com/@gear-js/api/-/api-0.15.3.tgz#1d37f24c2481cb36ee4cdd9253735c1f33fe1075"
+  integrity sha512-Yrzrr/eQEjnIiBLipre6bTlsRrzXVQzV3kuel0zerKJJor66nmaEHhwDfb4usqjeKw0rzHg48ZfXU7AOZQ3OrQ==
 
 "@gear-js/ui@^0.0.3":
   version "0.0.3"
@@ -8076,11 +8076,6 @@ react-feather@^2.0.9:
   integrity sha512-yMfCGRkZdXwIs23Zw/zIWCJO3m3tlaUvtHiXlW+3FH7cIT6fiK1iJ7RJWugXq7Fso8ZaQyUm92/GOOHXvkiVUw==
   dependencies:
     prop-types "^15.7.2"
-
-react-hook-form@^7.28.1:
-  version "7.28.1"
-  resolved "https://registry.yarnpkg.com/react-hook-form/-/react-hook-form-7.28.1.tgz#95fc37be6c6b9d57212eb7eca055fb36d079b3b7"
-  integrity sha512-mgwxvXuvt3FMY/mdnWbPc++Zf1U5xYzkhOaL05mtFMLvXc9MvUhMUlKtUVuO12sOrgT3nPXBgVFawtiJ4ONrgg==
 
 react-is@^16.7.0, react-is@^16.8.1:
   version "16.13.1"
