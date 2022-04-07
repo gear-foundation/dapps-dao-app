@@ -2,6 +2,10 @@ type DaoBalanceResponse = {
   Balance: string;
 };
 
+type MemberPowerResponse = {
+  MemberPower: string;
+};
+
 type UserStatusResponse = {
   UserStatus: userStatus;
 };
@@ -13,4 +17,4 @@ type userStatus = {
   waitForDecision: boolean;
 };
 
-export type { DaoBalanceResponse, UserStatusResponse };
+export type { DaoBalanceResponse, UserStatusResponse, MemberPowerResponse };

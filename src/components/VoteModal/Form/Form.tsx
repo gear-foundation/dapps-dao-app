@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Spinner } from 'components/Spinner/Spinner';
 import { Radio, Button } from '@gear-js/ui';
-import { useDaoBalance } from 'components/hooks';
+import { useMemberPower } from 'components/hooks';
 
 import './Form.scss';
 
@@ -11,7 +11,7 @@ type Props = {
 };
 
 const Form = ({ handleSubmit, inProgress }: Props) => {
-  const daoBalance = useDaoBalance();
+  const memberPower = useMemberPower();
   const [selectedValue, setSelectedValue] = useState('Yes');
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -21,7 +21,7 @@ const Form = ({ handleSubmit, inProgress }: Props) => {
   return (
     <form className="vote-modal__form">
       <div className="vote-modal__balance">
-        Your Power: <span>{daoBalance ? daoBalance : <Spinner />}</span>
+        Your Power: <span>{memberPower ? memberPower : <Spinner />}</span>
       </div>
       <div className="vote-modal__radio">
         <Radio
