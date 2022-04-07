@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { Spinner } from 'components/Spinner/Spinner';
 import { ProposalItems } from './children/ProposalItems/ProposalItems';
-import { ProposalStatus } from './children/ProposalStatus/ProposalStatus';
+import { ProposalStatus } from 'components/ProposalStatus/ProposalStatus';
 import { Title } from './children/Title/Title';
 import { BackButton } from 'components/BackButton/BackButton';
 import { ContractResponse, ProposalInfo } from 'pages/types';

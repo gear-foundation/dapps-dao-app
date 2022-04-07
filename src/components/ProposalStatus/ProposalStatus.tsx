@@ -29,7 +29,7 @@ const ProposalStatus = ({
 
   return (
     <div className={clsx(`proposal-status`, status)}>
-      Status: <span>{status}</span>
+      <span>{status}</span>
     </div>
   );
 };
