@@ -30,6 +30,7 @@ const MintButton = () => {
   const handleError = (error: Error) => {
     console.log(error);
     alert.error(error.message);
+    setIsLoading(false);
   };
 
   const calculateGas = () => {
