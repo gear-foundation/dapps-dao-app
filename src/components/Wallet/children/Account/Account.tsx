@@ -34,7 +34,7 @@ const Account = ({ openModal, closeModal }: Props) => {
     closeModal();
   };
 
-  // Chech membership stat us of chosen account and set it globally
+  // Check membership state us of chosen account and set it globally
 
   useEffect(() => {
     if (account) {

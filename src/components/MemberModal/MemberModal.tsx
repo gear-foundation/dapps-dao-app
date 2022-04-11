@@ -33,7 +33,11 @@ const MemberModal = ({ closeModal }: Props) => {
       sendMessageToProgram(
         api,
         DAO_CONTRACT_ADDRESS,
-        { RequestForMembership: amount },
+        {
+          Deposit: {
+            amount,
+          },
+        },
         { handle_input: 'DaoAction', types: REGISTRY_TYPES },
         account,
         alert,
@@ -47,11 +51,13 @@ const MemberModal = ({ closeModal }: Props) => {
   };
 
   return (
-    <Modal caption="Request membership" close={closeModal}>
+    <Modal caption="Deposit funds" close={closeModal}>
       {isSubmited ? (
-        <div className="center">Your request has been submitted, please wait for confirmation from DAO administrator and completion of the voting on the membership proposal.</div>
+        <div className="center">
+          Congratulations! Now you are DAO member. You can vote for proposals or create your own.
+        </div>
       ) : (
-        <Form handleSubmit={handleSubmit} inProgress={inProgress}/>
+        <Form handleSubmit={handleSubmit} inProgress={inProgress} />
       )}
     </Modal>
   );
