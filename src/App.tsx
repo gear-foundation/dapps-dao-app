@@ -5,9 +5,7 @@ import { ReactComponent as Logo } from './images/logo.svg';
 import { Loader } from './components/Loader/Loader';
 import { Wallet } from './components/Wallet/Wallet';
 import { MintButton } from './components/MintButton/MintButton';
-import { AdminLink } from './components/AdminLink/AdminLink';
 import { Main } from './pages/Main/Main';
-import { AdminPanel } from './pages/AdminPanel/AdminPanel';
 import { AddProposal } from './pages/AddProposal/AddProposal';
 import { ProposalDetails } from './pages/ProposalDetails/ProposalDetails';
 
@@ -34,12 +32,10 @@ const AppComponent: FC = () => {
           </section>
 
           <div className="main-section-content">
-            {isAdmin && <AdminLink />}
             <div className="container">
               <Routes>
                 <Route path={routes.main} element={<Main />} />
                 <Route path={routes.proposal} element={<ProposalDetails />} />
-                <Route path={routes.admin} element={<AdminPanel />} />
                 <Route path={routes.add} element={<AddProposal />} />
               </Routes>
             </div>
