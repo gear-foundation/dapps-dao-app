@@ -40,7 +40,7 @@ export const Welcome = () => {
           </Link>
         ) : (
           <Button
-            text="Request membership"
+            text="Become a member"
             className="btn btn-success"
             onClick={() => {
               if (account) openModal();

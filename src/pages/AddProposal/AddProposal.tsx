@@ -4,7 +4,7 @@ import { sendMessageToProgram } from 'service/SendMessage';
 import { BackButton } from 'components/BackButton/BackButton';
 import { DAO_CONTRACT_ADDRESS, REGISTRY_TYPES } from 'consts';
 import { ProposalValues } from 'pages/types';
-import { Form } from './children/Form/Form';
+import { Form } from './Form/Form';
 import { useAlert } from 'react-alert';
 
 import './AddProposal.scss';
