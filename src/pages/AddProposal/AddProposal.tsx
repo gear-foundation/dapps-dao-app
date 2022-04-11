@@ -20,12 +20,8 @@ const AddProposal = () => {
   const [isSubmited, setIsSubmited] = useState(false);
   const [inProgress, setInProgress] = useState(false);
 
-  // Submit proposal (Membership or Funding)
-  const handlePropose = (
-    event: React.MouseEvent,
-    type: string,
-    values: ProposalValues,
-  ) => {
+  // Submit proposal
+  const handlePropose = (event: React.MouseEvent, values: ProposalValues) => {
     event.preventDefault();
 
     if (!isMember) {
@@ -33,46 +29,21 @@ const AddProposal = () => {
       return;
     }
 
-    const {
-      applicant,
-      tokenTribute,
-      sharesRequested,
-      amount,
-      quorum,
-      details,
-    } = values;
-
-    let payload: Object;
-
-    if (type === 'membership') {
-      payload = {
-        SubmitMembershipProposal: {
-          applicant,
-          tokenTribute,
-          sharesRequested,
-          quorum,
-          details,
-        },
-      };
-    }
-
-    if (type === 'funding') {
-      payload = {
-        SubmitFundingProposal: {
-          applicant,
-          amount,
-          quorum,
-          details,
-        },
-      };
-    }
+    const { applicant, amount, quorum, details } = values;
 
     if (account) {
       setInProgress(true);
       sendMessageToProgram(
         api,
         DAO_CONTRACT_ADDRESS,
-        payload!,
+        {
+          SubmitFundingProposal: {
+            applicant,
+            amount,
+            quorum,
+            details,
+          },
+        },
         { handle_input: 'DaoAction', types: REGISTRY_TYPES },
         account,
         alert,

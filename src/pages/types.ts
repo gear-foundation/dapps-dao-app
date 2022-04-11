@@ -34,8 +34,6 @@ export type AllProposal = {
 export type ProposalValues = {
   applicant: string;
   amount: string;
-  tokenTribute: string;
-  sharesRequested: string;
   quorum: string;
   details: string;
 };

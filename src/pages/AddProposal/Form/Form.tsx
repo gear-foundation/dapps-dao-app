@@ -7,27 +7,20 @@ import './Form.scss';
 type Props = {
   handleSubmit: (
     event: React.MouseEvent<HTMLElement>,
-    type: string,
     payload: ProposalValues,
   ) => void;
   inProgress: boolean;
 };
 
 const Form = ({ handleSubmit, inProgress }: Props) => {
-  const [proposalType, setProposalType] = useState<string>('membership');
 
   const [values, setValues] = useState<ProposalValues>({
     applicant: '',
     amount: '',
-    tokenTribute: '',
-    sharesRequested: '',
     quorum: '',
     details: '',
   });
 
-  const handleRadioChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setProposalType(e.target.value);
-  };
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
@@ -40,22 +33,6 @@ const Form = ({ handleSubmit, inProgress }: Props) => {
 
   return (
     <form className="add-proposal__form">
-      <div className="add-proposal__radio">
-        <Radio
-          label="Membership proposal"
-          value="membership"
-          onChange={handleRadioChange}
-          checked={proposalType === 'membership'}
-          name="type"
-        />
-        <Radio
-          label="Funding proposal"
-          value="funding"
-          onChange={handleRadioChange}
-          checked={proposalType === 'funding'}
-          name="type"
-        />
-      </div>
       <fieldset className="add-proposal__body">
         <Input
           label="Applicant (type: ActorId)"
@@ -63,29 +40,14 @@ const Form = ({ handleSubmit, inProgress }: Props) => {
           value={values.applicant}
           onChange={handleInputChange}
         />
-        {proposalType === 'membership' ? (
-          <>
-            <Input
-              label="TokenTribute (type: u128)"
-              name="tokenTribute"
-              value={values.tokenTribute}
-              onChange={handleInputChange}
-            />
-            <Input
-              label="SharesRequested (type: u128)"
-              name="sharesRequested"
-              value={values.sharesRequested}
-              onChange={handleInputChange}
-            />
-          </>
-        ) : (
+      
           <Input
             label="Amount (type: u128)"
             name="amount"
             value={values.amount}
             onChange={handleInputChange}
           />
-        )}
+
         <Input
           label="Quorum (type: u128)"
           name="quorum"
@@ -104,7 +66,7 @@ const Form = ({ handleSubmit, inProgress }: Props) => {
         className="btn btn-success"
         text={inProgress ? '...Broadcasting' : 'Submit'}
         disabled={inProgress}
-        onClick={(event) => handleSubmit(event, proposalType, values)}
+        onClick={(event) => handleSubmit(event, values)}
       />
     </form>
   );
