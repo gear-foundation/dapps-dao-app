@@ -7,14 +7,8 @@ type MemberPowerResponse = {
 };
 
 type UserStatusResponse = {
-  UserStatus: userStatus;
+  UserStatus: 'Admin' | 'None' | 'Member';
 };
 
-type userStatus = {
-  isAdmin: boolean;
-  isMember: boolean;
-  isInWaitlist: boolean;
-  waitForDecision: boolean;
-};
 
 export type { DaoBalanceResponse, UserStatusResponse, MemberPowerResponse };
