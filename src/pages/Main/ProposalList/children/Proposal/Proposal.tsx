@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import { Button } from '@gear-js/ui';
 import { toDate } from 'utils';
 import { ProposalStatus } from 'components/ProposalStatus/ProposalStatus';
 import { AllProposal } from 'pages/types';
@@ -13,6 +14,14 @@ type Props = {
 };
 
 const Proposal = ({ proposals, handleVote }: Props) => {
+  const isExpired = (_timestamp: string) => {
+    const now = Date.now();
+    const formated_timestamp = _timestamp.replaceAll(',', '');
+    if (now >= Number(formated_timestamp)) return true;
+
+    return false;
+  };
+
   return (
     <>
       {Object.entries(proposals).map(([proposalId, proposal], index) => {
@@ -24,19 +33,18 @@ const Proposal = ({ proposals, handleVote }: Props) => {
               <div className="like">{proposal.yesVotes}</div>
               <div className="unlike">{proposal.noVotes}</div>
             </div>
+            {console.log(isExpired(proposal.endedAt))}
             <div className="time">Expires: {toDate(proposal.endedAt)}</div>
-            <a
-              href="#"
+
+            <Button
+              text="Vote"
+              icon={voteIcon}
+              disabled={isExpired(proposal.endedAt)}
               className="btn btn-success btn-sm"
               onClick={(event) => {
                 handleVote(event, proposalId);
               }}
-            >
-              <i>
-                <img src={voteIcon} alt=""></img>
-              </i>
-              Vote
-            </a>
+            />
 
             <Link
               to={`proposal/${proposalId}`}
