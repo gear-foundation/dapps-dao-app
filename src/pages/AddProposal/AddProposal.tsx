@@ -17,7 +17,7 @@ const AddProposal = () => {
     userStatus: { isMember },
   } = useStatus();
 
-  const [isSubmited, setIsSubmited] = useState(false);
+  const [isSubmited, setIsSubmited] = useState(true);
   const [inProgress, setInProgress] = useState(false);
 
   // Submit proposal
@@ -65,7 +65,7 @@ const AddProposal = () => {
             <span className="add-proposal__title">Make new proposal</span>
           </div>
           {isSubmited ? (
-            <div className="center">Your proposal has been submitted.</div>
+            <div className="add-proposal__success">Your proposal has been submitted.</div>
           ) : (
             <Form handleSubmit={handlePropose} inProgress={inProgress} />
           )}

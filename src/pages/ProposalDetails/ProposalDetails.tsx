@@ -29,7 +29,7 @@ const ProposalDetails = () => {
       )
       .then((state) => state.toHuman() as ContractResponse)
       .then(({ ProposalInfo }) => setProposal(ProposalInfo));
-  }, [ProposalId, api.programState]);
+  }, [ProposalId]);
 
   return (
     <>
@@ -37,10 +37,7 @@ const ProposalDetails = () => {
         <>
           <div className="proposal-header">
             <BackButton />
-            <Title
-              isMembershipProposal={proposal.isMembershipProposal}
-              proposalId={ProposalId}
-            />
+            <Title proposalId={ProposalId} />
             <ProposalStatus proposal={proposal} />
           </div>
 

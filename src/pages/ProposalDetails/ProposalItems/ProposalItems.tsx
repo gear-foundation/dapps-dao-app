@@ -7,18 +7,7 @@ type Props = {
 };
 
 const ProposalItems = ({
-  proposal: {
-    proposer,
-    applicant,
-    yesVotes,
-    noVotes,
-    isMembershipProposal,
-    tokenTribute,
-    sharesRequested,
-    amount,
-    quorum,
-    details,
-  },
+  proposal: { proposer, applicant, yesVotes, noVotes, amount, quorum, details },
 }: Props) => {
   return (
     <div className="proposal-info-block">
@@ -38,23 +27,11 @@ const ProposalItems = ({
         <div className="title">No votes:</div>
         <div className="proposal-info">{noVotes}</div>
       </div>
-      {isMembershipProposal ? (
-        <>
-          <div className="row">
-            <div className="title">Token tribute:</div>
-            <div className="proposal-info">{tokenTribute} DAO</div>
-          </div>
-          <div className="row">
-            <div className="title">Shares Requested:</div>
-            <div className="proposal-info">{sharesRequested} DAO</div>
-          </div>
-        </>
-      ) : (
-        <div className="row">
-          <div className="title">Amount:</div>
-          <div className="proposal-info">{amount} DAO</div>
-        </div>
-      )}
+
+      <div className="row">
+        <div className="title">Amount:</div>
+        <div className="proposal-info">{amount} DAO</div>
+      </div>
 
       <div className="row">
         <div className="title">Quorum:</div>
