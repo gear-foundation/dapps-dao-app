@@ -35,7 +35,7 @@ export const ProposalList = () => {
   const handleVote = (event: React.MouseEvent, id: string) => {
     event.preventDefault();
 
-    if(!isMember){
+    if (!isMember) {
       alert.error('Only Members Can Vote');
       return;
     }
@@ -56,7 +56,7 @@ export const ProposalList = () => {
       )
       .then((state) => state.toHuman() as AllProposalResponse)
       .then(({ AllProposals }) => setProposals(AllProposals));
-  }, []);
+  }, [closeModal]);
 
   return (
     <div className="proposal-block">

@@ -17,7 +17,7 @@ const AddProposal = () => {
     userStatus: { isMember },
   } = useStatus();
 
-  const [isSubmited, setIsSubmited] = useState(true);
+  const [isSubmited, setIsSubmited] = useState(false);
   const [inProgress, setInProgress] = useState(false);
 
   // Submit proposal
