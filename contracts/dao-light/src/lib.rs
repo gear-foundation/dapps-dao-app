@@ -345,10 +345,7 @@ pub unsafe extern "C" fn meta_state() -> *mut [i32; 2] {
         State::IsMember(account) => StateReply::IsMember(dao.is_member(&account)).encode(),
         State::ProposalId => StateReply::ProposalId(dao.proposal_id).encode(),
         State::ProposalInfo(proposal_id) => {
-            StateReply::ProposalInfo{
-                proposal_id,
-                proposal: dao.proposals.get(&proposal_id).unwrap().clone()
-            }.encode()
+            StateReply::ProposalInfo(dao.proposals.get(&proposal_id).unwrap().clone()).encode()
         }
         State::MemberInfo(account) => {
             StateReply::MemberInfo(dao.members.get(&account).unwrap().clone()).encode()
