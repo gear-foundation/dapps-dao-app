@@ -1,91 +1,8 @@
 use codec::Encode;
-use dao_io::*;
-use ft_io::*;
+use dao_light_io::*;
 use gtest::{Program, System};
-const MEMBERS: &'static [u64] = &[3, 4, 5];
-
-fn init_fungible_token(sys: &System) {
-    sys.init_logger();
-    let ft = Program::from_file(
-        &sys,
-        "../fungible-token/target/wasm32-unknown-unknown/release/fungible_token.wasm",
-    );
-
-    let res = ft.send(
-        100001,
-        InitConfig {
-            name: String::from("MyToken"),
-            symbol: String::from("MTK"),
-        },
-    );
-
-    assert!(res.log().is_empty());
-    MEMBERS.iter().enumerate().for_each(|(_, member)| {
-        let res = ft.send(*member, Action::Mint(10000000));
-        assert!(!res.main_failed());
-    });
-}
-
-fn init_dao(sys: &System) {
-    sys.init_logger();
-    let dao = Program::current(&sys);
-    let res = dao.send(
-        100001,
-        InitDao {
-            admin: 3.into(),
-            approved_token_program_id: 1.into(),
-            period_duration: 10000000,
-            voting_period_length: 100000000,
-        },
-    );
-    assert!(res.log().is_empty());
-}
-
-fn deposit(dao: &Program, member: u64, amount: u128) {
-    let res = dao.send(member, DaoAction::Deposit { amount });
-    assert!(!res.main_failed());
-}
-
-fn proposal(dao: &Program, member: u64, amount: u128) {
-    let res = dao.send(
-        member,
-        DaoAction::SubmitFundingProposal {
-            applicant: 20.into(),
-            amount,
-            quorum: 80,
-            details: "Funding proposal".to_string(),
-        },
-    );
-    assert!(res.contains(&(
-        member,
-        DaoEvent::SubmitFundingProposal {
-            proposer: member.into(),
-            applicant: 20.into(),
-            proposal_id: 0,
-            amount,
-        }
-        .encode()
-    )));
-}
-
-fn vote(dao: &Program, proposal_id: u128, vote: Vote) {
-    let res = dao.send(
-        3,
-        DaoAction::SubmitVote {
-            proposal_id: proposal_id.clone(),
-            vote: vote.clone(),
-        },
-    );
-    assert!(res.contains(&(
-        3,
-        DaoEvent::SubmitVote {
-            account: 3.into(),
-            proposal_id: proposal_id.clone(),
-            vote: vote.clone(),
-        }
-        .encode()
-    )));
-}
+mod utils;
+use utils::*;
 
 #[test]
 fn deposit_tokens() {
@@ -93,7 +10,15 @@ fn deposit_tokens() {
     init_fungible_token(&sys);
     init_dao(&sys);
     let dao = sys.get_program(2);
-    deposit(&dao, 4, 1000);
+    let res = deposit(&dao, MEMBERS[0], 1000);
+    assert!(res.contains(&(
+        MEMBERS[0],
+        DaoEvent::Deposit {
+            member: MEMBERS[0].into(),
+            share: 1000,
+        }
+        .encode()
+    )));
 }
 
 #[test]
@@ -102,8 +27,30 @@ fn create_proposal() {
     init_fungible_token(&sys);
     init_dao(&sys);
     let dao = sys.get_program(2);
-    deposit(&dao, 4, 1000);
-    proposal(&dao, 4, 800);
+    assert!(!deposit(&dao, MEMBERS[0], 1000).main_failed());
+    let res = proposal(&dao, MEMBERS[0], MEMBERS[2], 800);
+    assert!(res.contains(&(
+        MEMBERS[0],
+        DaoEvent::SubmitFundingProposal {
+            proposer: MEMBERS[0].into(),
+            applicant: MEMBERS[2].into(),
+            proposal_id: 0,
+            amount: 800,
+        }
+        .encode()
+    )));
+
+    let res = proposal(&dao, MEMBERS[0], MEMBERS[2], 100);
+    assert!(res.contains(&(
+        MEMBERS[0],
+        DaoEvent::SubmitFundingProposal {
+            proposer: MEMBERS[0].into(),
+            applicant: MEMBERS[2].into(),
+            proposal_id: 1,
+            amount: 100,
+        }
+        .encode()
+    )));
 }
 
 #[test]
@@ -112,125 +59,235 @@ fn create_proposal_failures() {
     init_fungible_token(&sys);
     init_dao(&sys);
     let dao = sys.get_program(2);
-
+    assert!(!deposit(&dao, MEMBERS[0], 1000).main_failed());
+    // must fail since dao has not enough tokens for funding
+    assert!(proposal(&dao, MEMBERS[0], MEMBERS[2], 1100).main_failed());
+    // creates proposal for funding and locks tokens
+    assert!(!proposal(&dao, MEMBERS[0], MEMBERS[2], 800).main_failed());
+    // must fail since tokens of dao are locked because of previous proposal
+    assert!(proposal(&dao, MEMBERS[0], MEMBERS[2], 300).main_failed());
+    // must fail since proposal is made for the zero address
+    assert!(proposal(&dao, MEMBERS[0], ZERO_ID, 100).main_failed());
+    // must fail since `msg::source()` is not a dao member
+    assert!(proposal(&dao, MEMBERS[1], MEMBERS[0], 100).main_failed());
 }
 
-// #[test]
-// fn vote_on_proposal_failures() {
-//     let sys = System::new();
-//     init_fungible_token(&sys);
-//     init_dao(&sys);
+#[test]
+fn vote_on_proposal() {
+    let sys = System::new();
+    init_fungible_token(&sys);
+    init_dao(&sys);
+    let dao = sys.get_program(2);
+    assert!(!deposit(&dao, MEMBERS[0], 1000).main_failed());
+    assert!(!deposit(&dao, MEMBERS[1], 1000).main_failed());
+    //submit funding proposal
+    assert!(!proposal(&dao, MEMBERS[0], MEMBERS[2], 800).main_failed());
+    // vote YES
+    let res = vote(&dao, MEMBERS[0], 0, Vote::Yes);
+    assert!(res.contains(&(
+        MEMBERS[0],
+        DaoEvent::SubmitVote {
+            account: MEMBERS[0].into(),
+            proposal_id: 0,
+            vote: Vote::Yes,
+        }
+        .encode()
+    )));
+    // vote NO
+    let res = vote(&dao, MEMBERS[1], 0, Vote::No);
+    assert!(res.contains(&(
+        MEMBERS[1],
+        DaoEvent::SubmitVote {
+            account: MEMBERS[1].into(),
+            proposal_id: 0,
+            vote: Vote::No,
+        }
+        .encode()
+    )));
+}
+#[test]
+fn vote_on_proposal_failures() {
+    let sys = System::new();
+    init_fungible_token(&sys);
+    init_dao(&sys);
 
-//     let dao = sys.get_program(2);
-//     create_membership_proposal(&dao, 0);
-//     // must fail since the proposal does not exist
-//     let res = dao.send(
-//         3,
-//         DaoAction::SubmitVote {
-//             proposal_id: 1,
-//             vote: Vote::Yes,
-//         },
-//     );
-//     assert!(res.main_failed());
+    let dao = sys.get_program(2);
+    assert!(!deposit(&dao, MEMBERS[0], 1000).main_failed());
+    assert!(!deposit(&dao, MEMBERS[1], 1000).main_failed());
+    //submit funding proposal
+    assert!(!proposal(&dao, MEMBERS[0], MEMBERS[2], 800).main_failed());
+    // must fail since the proposal does not exist
+    assert!(vote(&dao, MEMBERS[1], 1, Vote::No).main_failed());
+    // must fail since `msg::source()` is not a dao member
+    assert!(vote(&dao, MEMBERS[2], 0, Vote::No).main_failed());
 
-//     //must fail since the account is not delegate
-//     let res = dao.send(
-//         4,
-//         DaoAction::SubmitVote {
-//             proposal_id: 0,
-//             vote: Vote::Yes,
-//         },
-//     );
-//     assert!(res.main_failed());
+    //submit one more funding proposal
+    assert!(!proposal(&dao, MEMBERS[0], MEMBERS[2], 800).main_failed());
+    // must fail since the voting period has not started
+    assert!(vote(&dao, MEMBERS[1], 1, Vote::No).main_failed());
 
-//     sys.spend_blocks(1000000001);
-//     // must fail since the voting period has expired
-//     let res = dao.send(
-//         3,
-//         DaoAction::SubmitVote {
-//             proposal_id: 0,
-//             vote: Vote::Yes,
-//         },
-//     );
-//     assert!(res.main_failed());
+    // vote on the proposal
+    assert!(!vote(&dao, MEMBERS[1], 0, Vote::No).main_failed());
 
-//     create_membership_proposal(&dao, 1);
-//     create_membership_proposal(&dao, 2);
-//     // must fail since the voting period has not started
-//     let res = dao.send(
-//         3,
-//         DaoAction::SubmitVote {
-//             proposal_id: 2,
-//             vote: Vote::Yes,
-//         },
-//     );
-//     assert!(res.main_failed());
-// }
+    // must fail since account has already voted on that proposal
+    assert!(vote(&dao, MEMBERS[1], 0, Vote::Yes).main_failed());
 
-// #[test]
-// fn vote_on_proposal() {
-//     let sys = System::new();
-//     init_fungible_token(&sys);
-//     init_dao(&sys);
+    sys.spend_blocks(1000000001);
 
-//     let dao = sys.get_program(2);
-//     create_membership_proposal(&dao, 0);
-//     vote(&dao, 0, Vote::Yes);
+    // must fail since proposal voting period has expired
+    assert!(vote(&dao, MEMBERS[0], 0, Vote::Yes).main_failed());
+}
 
-//     // must fail since the account has already voted
-//     let res = dao.send(
-//         3,
-//         DaoAction::SubmitVote {
-//             proposal_id: 0,
-//             vote: Vote::Yes,
-//         },
-//     );
-//     assert!(res.main_failed());
-// }
+#[test]
+fn process_proposal() {
+    let sys = System::new();
+    init_fungible_token(&sys);
+    init_dao(&sys);
 
-// #[test]
-// fn process_proposal() {
-//     let sys = System::new();
-//     init_fungible_token(&sys);
-//     init_dao(&sys);
+    let dao = sys.get_program(2);
 
-//     let dao = sys.get_program(2);
-//     create_membership_proposal(&dao, 0);
-//     vote(&dao, 0, Vote::Yes);
+    assert!(!deposit(&dao, MEMBERS[0], 1000).main_failed());
+    assert!(!deposit(&dao, MEMBERS[1], 2000).main_failed());
+    assert!(!deposit(&dao, MEMBERS[2], 3000).main_failed());
+    assert!(!deposit(&dao, MEMBERS[3], 4000).main_failed());
 
-//     let dao = sys.get_program(2);
-//     // must fail since voting period is not over
-//     let res = dao.send(3, DaoAction::ProcessProposal(0));
-//     assert!(res.main_failed());
+    //submit funding proposal
+    assert!(!proposal(&dao, MEMBERS[0], MEMBERS[2], 800).main_failed());
+    // votes YES
+    assert!(!vote(&dao, MEMBERS[0], 0, Vote::Yes).main_failed());
+    assert!(!vote(&dao, MEMBERS[2], 0, Vote::Yes).main_failed());
+    assert!(!vote(&dao, MEMBERS[3], 0, Vote::Yes).main_failed());
+    // votes NO
+    assert!(!vote(&dao, MEMBERS[1], 0, Vote::No).main_failed());
 
-//     sys.spend_blocks(1000000001);
-//     let res = dao.send(3, DaoAction::ProcessProposal(0));
-//     assert!(res.contains(&(
-//         3,
-//         DaoEvent::ProcessProposal {
-//             applicant: 4.into(),
-//             proposal_id: 0,
-//             did_pass: true,
-//         }
-//         .encode()
-//     )));
+    sys.spend_blocks(1000000001);
 
-//     create_membership_proposal(&dao, 1);
-//     vote(&dao, 1, Vote::No);
-//     sys.spend_blocks(1000000001);
-//     let res = dao.send(3, DaoAction::ProcessProposal(1));
-//     assert!(res.contains(&(
-//         3,
-//         DaoEvent::ProcessProposal {
-//             applicant: 4.into(),
-//             proposal_id: 1,
-//             did_pass: false,
-//         }
-//         .encode()
-//     )));
-// }
+    let res = process(&dao, MEMBERS[0], 0);
+    assert!(res.contains(&(
+        MEMBERS[0],
+        DaoEvent::ProcessProposal {
+            applicant: MEMBERS[2].into(),
+            proposal_id: 0,
+            did_pass: true,
+        }
+        .encode()
+    )));
 
+    //submit funding proposal
+    assert!(!proposal(&dao, MEMBERS[0], MEMBERS[2], 800).main_failed());
 
+    // votes NO
+    assert!(!vote(&dao, MEMBERS[0], 1, Vote::No).main_failed());
+    assert!(!vote(&dao, MEMBERS[2], 1, Vote::No).main_failed());
+    // votes YES
+    assert!(!vote(&dao, MEMBERS[3], 1, Vote::Yes).main_failed());
+    assert!(!vote(&dao, MEMBERS[1], 1, Vote::Yes).main_failed());
 
+    sys.spend_blocks(1000000001);
 
+    let res = process(&dao, MEMBERS[0], 1);
+    assert!(res.contains(&(
+        MEMBERS[0],
+        DaoEvent::ProcessProposal {
+            applicant: MEMBERS[2].into(),
+            proposal_id: 1,
+            did_pass: false,
+        }
+        .encode()
+    )));
+}
 
+#[test]
+fn process_proposal_failures() {
+    let sys = System::new();
+    init_fungible_token(&sys);
+    init_dao(&sys);
+
+    let dao = sys.get_program(2);
+
+    assert!(!deposit(&dao, MEMBERS[0], 1000).main_failed());
+
+    //submit funding proposal
+    assert!(!proposal(&dao, MEMBERS[0], MEMBERS[2], 800).main_failed());
+    //must fail since proposal is not ready to be processed
+    assert!(process(&dao, MEMBERS[0], 0).main_failed());
+    //must fail since previous proposal must be processed
+    assert!(process(&dao, MEMBERS[0], 1).main_failed());
+
+    sys.spend_blocks(1000000001);
+
+    assert!(!process(&dao, MEMBERS[0], 0).main_failed());
+    //must fail since proposal does not exist
+    assert!(process(&dao, MEMBERS[0], 1).main_failed());
+    //must fail since proposal has already been processed
+    assert!(process(&dao, MEMBERS[0], 0).main_failed());
+}
+
+#[test]
+fn ragequit_dao() {
+    let sys = System::new();
+    init_fungible_token(&sys);
+    init_dao(&sys);
+
+    let dao = sys.get_program(2);
+
+    assert!(!deposit(&dao, MEMBERS[1], 1000).main_failed());
+
+    let res = ragequit(&dao, MEMBERS[1], 800);
+    assert!(res.contains(&(
+        MEMBERS[1],
+        DaoEvent::RageQuit {
+            member: MEMBERS[1].into(),
+            amount: 800,
+        }
+        .encode()
+    )));
+
+    assert!(!deposit(&dao, MEMBERS[0], 1000).main_failed());
+    assert!(!deposit(&dao, MEMBERS[1], 1000).main_failed());
+    assert!(!deposit(&dao, MEMBERS[2], 1000).main_failed());
+    assert!(!deposit(&dao, MEMBERS[3], 1000).main_failed());
+
+    //submit funding proposal
+    assert!(!proposal(&dao, MEMBERS[1], MEMBERS[2], 800).main_failed());
+
+    // votes YES
+    assert!(!vote(&dao, MEMBERS[0], 0, Vote::Yes).main_failed());
+    assert!(!vote(&dao, MEMBERS[1], 0, Vote::Yes).main_failed());
+    assert!(!vote(&dao, MEMBERS[2], 0, Vote::Yes).main_failed());
+    assert!(!vote(&dao, MEMBERS[3], 0, Vote::Yes).main_failed());
+
+    sys.spend_blocks(1000000001);
+
+    assert!(!process(&dao, MEMBERS[0], 0).main_failed());
+
+    let res = ragequit(&dao, MEMBERS[1], 800);
+    assert!(res.contains(&(
+        MEMBERS[1],
+        DaoEvent::RageQuit {
+            member: MEMBERS[1].into(),
+            amount: 647,
+        }
+        .encode()
+    )));
+}
+
+#[test]
+fn ragequit_failures() {
+    let sys = System::new();
+    init_fungible_token(&sys);
+    init_dao(&sys);
+
+    let dao = sys.get_program(2);
+
+    assert!(!deposit(&dao, MEMBERS[0], 1000).main_failed());
+    // must fail since the account is not a DAO member
+    assert!(ragequit(&dao, MEMBERS[1], 800).main_failed());
+    // must fail since the account has no sufficient shares
+    assert!(ragequit(&dao, MEMBERS[0], 1100).main_failed());
+    //submit funding proposal
+    assert!(!proposal(&dao, MEMBERS[0], MEMBERS[2], 800).main_failed());
+    assert!(!vote(&dao, MEMBERS[0], 0, Vote::Yes).main_failed());
+    // must fail since cant ragequit until highest index proposal member voted YES on is processed
+    assert!(ragequit(&dao, MEMBERS[0], 100).main_failed());
+}

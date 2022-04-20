@@ -4,7 +4,7 @@
 mod tests;
 
 use ft_io::*;
-use gstd::{exec, debug, msg, prelude::*, ActorId};
+use gstd::{exec, msg, prelude::*, ActorId};
 
 const ZERO_ID: ActorId = ActorId::new([0u8; 32]);
 
@@ -27,24 +27,20 @@ static mut FUNGIBLE_TOKEN: Option<FungibleToken> = None;
 impl FungibleToken {
     /// Executed on receiving `fungible-token-messages::MintInput`.
     fn mint(&mut self, amount: u128) {
-        debug!("msg::source() {:?}", msg::source());
-        let balance = self.balances.get(&msg::source()).unwrap_or(&0);
-        debug!("balance before {:?}", balance);
         self.balances
             .entry(msg::source())
             .and_modify(|balance| *balance += amount)
             .or_insert(amount);
         self.total_supply += amount;
-        let balance = self.balances.get(&msg::source()).unwrap_or(&0);
-        debug!("balance after {:?}", balance);
         msg::reply(
-            Event::Transfer {
+            FTEvent::Transfer {
                 from: ZERO_ID,
                 to: msg::source(),
                 amount,
             },
             0,
-        );
+        )
+        .unwrap();
     }
     /// Executed on receiving `fungible-token-messages::BurnInput`.
     fn burn(&mut self, amount: u128) {
@@ -57,13 +53,14 @@ impl FungibleToken {
         self.total_supply -= amount;
 
         msg::reply(
-            Event::Transfer {
+            FTEvent::Transfer {
                 from: msg::source(),
                 to: ZERO_ID,
                 amount,
             },
             0,
-        );
+        )
+        .unwrap();
     }
     /// Executed on receiving `fungible-token-messages::TransferInput` or `fungible-token-messages::TransferFromInput`.
     /// Transfers `amount` tokens from `sender` account to `recipient` account.
@@ -85,13 +82,14 @@ impl FungibleToken {
             .and_modify(|balance| *balance += amount)
             .or_insert(amount);
         msg::reply(
-            Event::Transfer {
+            FTEvent::Transfer {
                 from: *from,
                 to: *to,
                 amount,
             },
             0,
-        );
+        )
+        .unwrap();
     }
 
     /// Executed on receiving `fungible-token-messages::ApproveInput`.
@@ -100,24 +98,24 @@ impl FungibleToken {
             panic!("Approve to zero address");
         }
         self.allowances
-            .entry(exec::origin())
+            .entry(msg::source())
             .or_default()
             .insert(*to, amount);
         msg::reply(
-            Event::Approve {
-                from: exec::origin(),
+            FTEvent::Approve {
+                from: msg::source(),
                 to: *to,
                 amount,
             },
             0,
-        );
+        )
+        .unwrap();
     }
 
     fn can_transfer(&mut self, from: &ActorId, amount: u128) -> bool {
         if from == &msg::source()
             || from == &exec::origin()
             || self.balances.get(&msg::source()).unwrap_or(&0) >= &amount
-            || self.balances.get(&exec::origin()).unwrap_or(&0) >= &amount
         {
             return true;
         }
@@ -142,8 +140,8 @@ gstd::metadata! {
     init:
         input: InitConfig,
     handle:
-        input: Action,
-        output: Event,
+        input: FTAction,
+        output: FTEvent,
     state:
         input: State,
         output: StateReply,
@@ -151,27 +149,27 @@ gstd::metadata! {
 
 #[no_mangle]
 pub unsafe extern "C" fn handle() {
-    let action: Action = msg::load().expect("Could not load Action");
+    let action: FTAction = msg::load().expect("Could not load Action");
     let ft: &mut FungibleToken = FUNGIBLE_TOKEN.get_or_insert(FungibleToken::default());
     match action {
-        Action::Mint(amount) => {
+        FTAction::Mint(amount) => {
             ft.mint(amount);
         }
-        Action::Burn(amount) => {
+        FTAction::Burn(amount) => {
             ft.burn(amount);
         }
-        Action::Transfer { from, to, amount } => {
+        FTAction::Transfer { from, to, amount } => {
             ft.transfer(&from, &to, amount);
         }
-        Action::Approve { to, amount } => {
+        FTAction::Approve { to, amount } => {
             ft.approve(&to, amount);
         }
-        Action::TotalSupply => {
-            msg::reply(Event::TotalSupply(ft.total_supply), 0);
+        FTAction::TotalSupply => {
+            msg::reply(FTEvent::TotalSupply(ft.total_supply), 0).unwrap();
         }
-        Action::BalanceOf(account) => {
+        FTAction::BalanceOf(account) => {
             let balance = ft.balances.get(&account).unwrap_or(&0);
-            msg::reply(Event::Balance(*balance), 0);
+            msg::reply(FTEvent::Balance(*balance), 0).unwrap();
         }
     }
 }
