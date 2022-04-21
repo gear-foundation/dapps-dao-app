@@ -7,8 +7,7 @@ Decentralized Autonomous Organization (DAO) operates without central authority o
 It's Ready-to-Use application based on two different smart-contracts:
 
 - Fundible Token [https://github.com/gear-tech/apps/tree/master/fungible-token](https://github.com/gear-tech/apps/tree/master/fungible-token) which permit to create utility token `DAO`
-- DAO contract (https://github.com/gear-tech/apps/tree/master/dao)[https://github.com/gear-tech/apps/tree/master/dao]
-
+- DAO contract [https://github.com/gear-tech/apps/tree/master/dao-light](https://github.com/gear-tech/apps/tree/master/dao-light)
 
 # Getting Started
 
