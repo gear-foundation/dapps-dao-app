@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Radio, Input, Button } from '@gear-js/ui';
+import { Input, Button } from '@gear-js/ui';
 import { ProposalValues } from 'pages/types';
 
 import './Form.scss';

@@ -1,6 +1,6 @@
 import React, { FC } from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import { useApi, useStatus } from 'hooks';
+import { useApi } from 'hooks';
 import { ReactComponent as Logo } from './images/logo.svg';
 import { Loader } from './components/Loader/Loader';
 import { Wallet } from './components/Wallet/Wallet';
@@ -14,8 +14,6 @@ import './App.css';
 
 const AppComponent: FC = () => {
   const { isApiReady } = useApi();
-  const { userStatus } = useStatus();
-  const { isAdmin } = userStatus;
 
   return (
     <div className="wrapper">
