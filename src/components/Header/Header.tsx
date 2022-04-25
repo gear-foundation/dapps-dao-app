@@ -9,7 +9,7 @@ const Header = () => {
   return (
     <section className={styles.header}>
       <Container className={styles.headerContainer}>
-        <a href='/' className='logo'>
+        <a href='/' className={styles.logo}>
           <Logo />
         </a>
         <MintButton />
