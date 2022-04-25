@@ -1,10 +1,9 @@
 import React, { FC } from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { useApi } from 'hooks';
-import { ReactComponent as Logo } from './images/logo.svg';
+import { Container } from 'layout';
+import { Header } from 'components/Header/Header';
 import { Loader } from './components/Loader/Loader';
-import { Wallet } from './components/Wallet/Wallet';
-import { MintButton } from './components/MintButton/MintButton';
 import { Main } from './pages/Main/Main';
 import { AddProposal } from './pages/AddProposal/AddProposal';
 import { ProposalDetails } from './pages/ProposalDetails/ProposalDetails';
@@ -16,27 +15,18 @@ const AppComponent: FC = () => {
   const { isApiReady } = useApi();
 
   return (
-    <div className="wrapper">
+    <div className='wrapper'>
       {isApiReady ? (
         <>
-          <section className="header-section">
-            <div className="container">
-              <a href="/" className="logo">
-                <Logo />
-              </a>
-              <MintButton />
-              <Wallet />
-            </div>
-          </section>
-
-          <div className="main-section-content">
-            <div className="container">
+          <Header />
+          <div className='main-section-content'>
+            <Container className='mainContainer'>
               <Routes>
                 <Route path={routes.main} element={<Main />} />
                 <Route path={routes.proposal} element={<ProposalDetails />} />
                 <Route path={routes.add} element={<AddProposal />} />
               </Routes>
-            </div>
+            </Container>
           </div>
         </>
       ) : (
