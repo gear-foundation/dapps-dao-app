@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import { Button } from '@gear-js/ui';
-import { toDate } from 'utils';
+import { toDate, isExpired } from 'utils';
 import { ProposalStatus } from 'components/ProposalStatus/ProposalStatus';
 import { AllProposal } from 'pages/types';
 import voteIcon from 'images/vote-icon.svg';
@@ -14,13 +14,6 @@ type Props = {
 };
 
 const Proposal = ({ proposals, handleVote }: Props) => {
-  const isExpired = (_timestamp: string) => {
-    const now = Date.now();
-    const formated_timestamp = _timestamp.replaceAll(',', '');
-    if (now >= Number(formated_timestamp)) return true;
-
-    return false;
-  };
 
   return (
     <>
@@ -33,7 +26,6 @@ const Proposal = ({ proposals, handleVote }: Props) => {
               <div className="like">{proposal.yesVotes}</div>
               <div className="unlike">{proposal.noVotes}</div>
             </div>
-            {console.log(isExpired(proposal.endedAt))}
             <div className="time">Expires: {toDate(proposal.endedAt)}</div>
 
             <Button

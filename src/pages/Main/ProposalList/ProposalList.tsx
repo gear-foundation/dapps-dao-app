@@ -56,6 +56,7 @@ export const ProposalList = () => {
       )
       .then((state) => state.toHuman() as AllProposalResponse)
       .then(({ AllProposals }) => setProposals(AllProposals));
+
   }, [closeModal]);
 
   return (
