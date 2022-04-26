@@ -2,11 +2,12 @@ import { useState } from 'react';
 import { useApi, useStatus, useAccount } from 'hooks';
 import { sendMessageToProgram } from 'service/SendMessage';
 import { BackButton } from 'components/BackButton/BackButton';
-import { DAO_CONTRACT_ADDRESS, REGISTRY_TYPES } from 'consts';
+import { DAO_CONTRACT_ADDRESS } from 'consts';
 import { ProposalValues } from 'pages/types';
 import { Form } from './Form/Form';
 import { useAlert } from 'react-alert';
 
+import { daoMeta } from 'out/metaTypes';
 import './AddProposal.scss';
 
 const AddProposal = () => {
@@ -44,7 +45,7 @@ const AddProposal = () => {
             details,
           },
         },
-        { handle_input: 'DaoAction', types: REGISTRY_TYPES },
+        { handle_input: 'DaoAction', types: daoMeta.types },
         account,
         alert,
         () => {

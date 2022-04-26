@@ -6,6 +6,8 @@ import { DAO_CONTRACT_ADDRESS, REGISTRY_TYPES } from 'consts';
 import { Modal } from 'components/Modal/Modal';
 import { Form } from './Form/Form';
 
+import { daoMeta } from 'out/metaTypes';
+
 type Props = {
   proposalId: string;
   closeModal: () => void;
@@ -33,7 +35,7 @@ const VoteModal = ({ closeModal, proposalId }: Props) => {
             vote,
           },
         },
-        { handle_input: 'DaoAction', types: REGISTRY_TYPES },
+        { handle_input: 'DaoAction', types: daoMeta.types },
         account,
         alert,
         () => {
