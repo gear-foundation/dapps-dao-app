@@ -32,3 +32,10 @@ export type ProposalValues = {
   quorum: string;
   details: string;
 };
+
+export type MemberEvent = {
+  Deposit: {
+    member: string;
+    share: string;
+  };
+};

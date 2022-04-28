@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useAlert } from 'react-alert';
 import { useAccount, useApi } from 'hooks';
 import { sendMessageToProgram } from 'service/SendMessage';
-import { DAO_CONTRACT_ADDRESS, REGISTRY_TYPES } from 'consts';
+import { DAO_CONTRACT_ADDRESS } from 'consts';
 import { Modal } from 'components/Modal/Modal';
 import { Form } from './Form/Form';
 
