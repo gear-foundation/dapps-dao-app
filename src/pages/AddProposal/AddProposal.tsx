@@ -2,11 +2,12 @@ import { useState } from 'react';
 import { useApi, useStatus, useAccount } from 'hooks';
 import { sendMessageToProgram } from 'service/SendMessage';
 import { BackButton } from 'components/BackButton/BackButton';
-import { DAO_CONTRACT_ADDRESS, REGISTRY_TYPES } from 'consts';
+import { DAO_CONTRACT_ADDRESS } from 'consts';
 import { ProposalValues } from 'pages/types';
-import { Form } from './children/Form/Form';
+import { Form } from './Form/Form';
 import { useAlert } from 'react-alert';
 
+import { daoMeta } from 'out/metaTypes';
 import './AddProposal.scss';
 
 const AddProposal = () => {
@@ -20,12 +21,8 @@ const AddProposal = () => {
   const [isSubmited, setIsSubmited] = useState(false);
   const [inProgress, setInProgress] = useState(false);
 
-  // Submit proposal (Membership or Funding)
-  const handlePropose = (
-    event: React.MouseEvent,
-    type: string,
-    values: ProposalValues,
-  ) => {
+  // Submit proposal
+  const handlePropose = (event: React.MouseEvent, values: ProposalValues) => {
     event.preventDefault();
 
     if (!isMember) {
@@ -33,47 +30,22 @@ const AddProposal = () => {
       return;
     }
 
-    const {
-      applicant,
-      tokenTribute,
-      sharesRequested,
-      amount,
-      quorum,
-      details,
-    } = values;
-
-    let payload: Object;
-
-    if (type === 'membership') {
-      payload = {
-        SubmitMembershipProposal: {
-          applicant,
-          tokenTribute,
-          sharesRequested,
-          quorum,
-          details,
-        },
-      };
-    }
-
-    if (type === 'funding') {
-      payload = {
-        SubmitFundingProposal: {
-          applicant,
-          amount,
-          quorum,
-          details,
-        },
-      };
-    }
+    const { applicant, amount, quorum, details } = values;
 
     if (account) {
       setInProgress(true);
       sendMessageToProgram(
         api,
         DAO_CONTRACT_ADDRESS,
-        payload!,
-        { handle_input: 'DaoAction', types: REGISTRY_TYPES },
+        {
+          SubmitFundingProposal: {
+            applicant,
+            amount,
+            quorum,
+            details,
+          },
+        },
+        { handle_input: 'DaoAction', types: daoMeta.types },
         account,
         alert,
         () => {
@@ -94,7 +66,7 @@ const AddProposal = () => {
             <span className="add-proposal__title">Make new proposal</span>
           </div>
           {isSubmited ? (
-            <div className="center">Your proposal has been submitted.</div>
+            <div className="add-proposal__success">Your proposal has been submitted.</div>
           ) : (
             <Form handleSubmit={handlePropose} inProgress={inProgress} />
           )}

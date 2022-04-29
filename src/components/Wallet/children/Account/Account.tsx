@@ -34,7 +34,7 @@ const Account = ({ openModal, closeModal }: Props) => {
     closeModal();
   };
 
-  // Chech membership stat us of chosen account and set it globally
+  // Check membership state us of chosen account and set it globally
 
   useEffect(() => {
     if (account) {
@@ -51,7 +51,24 @@ const Account = ({ openModal, closeModal }: Props) => {
           }),
         )
         .then((state) => state.toHuman() as UserStatusResponse)
-        .then(({ UserStatus }) => setUserStatus(UserStatus));
+        .then(({ UserStatus }) => {
+          if (UserStatus === 'Admin')
+            setUserStatus({
+              isAdmin: true,
+              isMember: true,
+            });
+          if (UserStatus === 'Member')
+            setUserStatus({
+              isAdmin: false,
+              isMember: true,
+            });
+
+          if (UserStatus === 'None')
+            setUserStatus({
+              isAdmin: false,
+              isMember: false,
+            });
+        });
     }
   }, [api, account]);
 

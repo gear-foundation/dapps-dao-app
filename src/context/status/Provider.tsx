@@ -8,8 +8,6 @@ const useStatus = () => {
   const [userStatus, setUserStatus] = useState<UserStatus>({
     isAdmin: false,
     isMember: false,
-    isInWaitlist: false,
-    waitForDecision: false,
   });
 
   return { userStatus, setUserStatus };

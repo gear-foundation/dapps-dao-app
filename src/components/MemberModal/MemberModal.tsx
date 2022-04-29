@@ -2,9 +2,11 @@ import React, { useState } from 'react';
 import { useAlert } from 'react-alert';
 import { useAccount, useApi } from 'hooks';
 import { sendMessageToProgram } from 'service/SendMessage';
-import { DAO_CONTRACT_ADDRESS, REGISTRY_TYPES } from 'consts';
+import { DAO_CONTRACT_ADDRESS } from 'consts';
 import { Modal } from 'components/Modal/Modal';
 import { Form } from './Form/Form';
+
+import { daoMeta } from 'out/metaTypes';
 
 type Props = {
   closeModal: () => void;
@@ -33,8 +35,12 @@ const MemberModal = ({ closeModal }: Props) => {
       sendMessageToProgram(
         api,
         DAO_CONTRACT_ADDRESS,
-        { RequestForMembership: amount },
-        { handle_input: 'DaoAction', types: REGISTRY_TYPES },
+        {
+          Deposit: {
+            amount,
+          },
+        },
+        { handle_input: 'DaoAction', types: daoMeta.types },
         account,
         alert,
         () => {
@@ -47,11 +53,13 @@ const MemberModal = ({ closeModal }: Props) => {
   };
 
   return (
-    <Modal caption="Request membership" close={closeModal}>
+    <Modal caption="Deposit funds" close={closeModal}>
       {isSubmited ? (
-        <div className="center">Your request has been submitted, please wait for confirmation from DAO administrator and completion of the voting on the membership proposal.</div>
+        <div className="center">
+          Congratulations! Now you are DAO member. You can vote for proposals or create your own.
+        </div>
       ) : (
-        <Form handleSubmit={handleSubmit} inProgress={inProgress}/>
+        <Form handleSubmit={handleSubmit} inProgress={inProgress} />
       )}
     </Modal>
   );

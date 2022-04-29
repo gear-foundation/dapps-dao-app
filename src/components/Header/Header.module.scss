@@ -1,0 +1,26 @@
+.header {
+  padding: 50px 0;
+}
+
+.headerContainer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.logo svg {
+  width: 100%;
+  max-width: 180px;
+}
+
+@media screen and (max-width: 767px) {
+  .header {
+    padding: 25px 0;
+  }
+
+  .headerContainer {
+    flex-direction: column;
+    justify-content: center;
+    gap: 30px;
+  }
+}

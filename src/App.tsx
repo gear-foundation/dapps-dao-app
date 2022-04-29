@@ -1,13 +1,10 @@
 import React, { FC } from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import { useApi, useStatus } from 'hooks';
-import { ReactComponent as Logo } from './images/logo.svg';
+import { useApi } from 'hooks';
+import { Container } from 'layout';
+import { Header } from 'components/Header/Header';
 import { Loader } from './components/Loader/Loader';
-import { Wallet } from './components/Wallet/Wallet';
-import { MintButton } from './components/MintButton/MintButton';
-import { AdminLink } from './components/AdminLink/AdminLink';
 import { Main } from './pages/Main/Main';
-import { AdminPanel } from './pages/AdminPanel/AdminPanel';
 import { AddProposal } from './pages/AddProposal/AddProposal';
 import { ProposalDetails } from './pages/ProposalDetails/ProposalDetails';
 
@@ -16,33 +13,20 @@ import './App.css';
 
 const AppComponent: FC = () => {
   const { isApiReady } = useApi();
-  const { userStatus } = useStatus();
-  const { isAdmin } = userStatus;
 
   return (
-    <div className="wrapper">
+    <div className='wrapper'>
       {isApiReady ? (
         <>
-          <section className="header-section">
-            <div className="container">
-              <a href="/" className="logo">
-                <Logo />
-              </a>
-              <MintButton />
-              <Wallet />
-            </div>
-          </section>
-
-          <div className="main-section-content">
-            {isAdmin && <AdminLink />}
-            <div className="container">
+          <Header />
+          <div className='main-section-content'>
+            <Container className='mainContainer'>
               <Routes>
                 <Route path={routes.main} element={<Main />} />
                 <Route path={routes.proposal} element={<ProposalDetails />} />
-                <Route path={routes.admin} element={<AdminPanel />} />
                 <Route path={routes.add} element={<AddProposal />} />
               </Routes>
-            </div>
+            </Container>
           </div>
         </>
       ) : (

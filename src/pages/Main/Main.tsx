@@ -1,8 +1,7 @@
-import { Welcome } from './children/index';
-import { ProposalList } from './children/index';
+import { Welcome } from './Welcome/Welcome';
+import { ProposalList } from './ProposalList/ProposalList';
 
 const Main = () => {
-
   return (
     <>
       <Welcome />

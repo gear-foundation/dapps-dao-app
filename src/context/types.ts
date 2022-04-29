@@ -6,7 +6,5 @@ export type Props = {
 
 export type UserStatus = {
   isAdmin: boolean,
-  isMember: boolean,
-  isInWaitlist: boolean,
-  waitForDecision: boolean
+  isMember: boolean
 };
