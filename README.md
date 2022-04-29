@@ -7,7 +7,7 @@ Decentralized Autonomous Organization (DAO) operates without central authority o
 It's Ready-to-Use application based on two different smart-contracts:
 
 - Fundible Token [https://github.com/gear-tech/apps/tree/master/fungible-token](https://github.com/gear-tech/apps/tree/master/fungible-token) which permit to create utility token `DAO`
-- DAO contract [https://github.com/gear-tech/apps/tree/master/dao](https://github.com/gear-tech/apps/tree/master/dao)
+- DAO contract [https://github.com/gear-tech/apps/tree/master/dao-light](https://github.com/gear-tech/apps/tree/master/dao-light)
 
 # Getting Started
 
@@ -17,13 +17,11 @@ Configure basic dApp in .env:
 REACT_APP_NETWORK
 REACT_APP_CONTRACT_ERC
 REACT_APP_CONTRACT_DAO
-REACT_APP_REGISTRY_TYPES
 ```
 
 - `REACT_APP_NETWORK` is Gear network address (wss://rpc-node.gear-tech.io:443)
 - `REACT_APP_CONTRACT_ERC` is Fundible Token contract address
 - `RREACT_APP_CONTRACT_DAO` is DAO contract address
-- `REACT_APP_REGISTRY_TYPES` is registry types of DAO for encode/decode data
 
 An example is available: [here](https://github.com/gear-tech/dao-app/blob/master/.env.example)
 
