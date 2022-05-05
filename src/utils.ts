@@ -11,7 +11,7 @@ export function toDate(_timestamp: string) {
   const date: Date = new Date(Number(formated_timestamp));
 
   const day = date.getDate();
-  const month = date.getMonth();
+  const month = date.getMonth() + 1;
   const hour = date.getHours();
   const minute = date.getMinutes();
 
