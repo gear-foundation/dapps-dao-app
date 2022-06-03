@@ -1,13 +1,13 @@
 # Gear DAO dApp
 
-[![Gitpod Ready-to-Code](https://img.shields.io/badge/Gitpod-Ready--to--Code-blue?logo=gitpod)](https://gitpod.io/#https://github.com/gear-academy/dao-app)
+[![Gitpod Ready-to-Code](https://img.shields.io/badge/Gitpod-Ready--to--Code-blue?logo=gitpod)](https://gitpod.io/#https://github.com/gear-dapps/dao-app)
 
 Decentralized Autonomous Organization (DAO) operates without central authority or control. It is community-driven and all the decisions are made through proposals in which different members are required to vote.
 
 It's Ready-to-Use application based on two different smart-contracts:
 
-- Fundible Token [https://github.com/gear-academy/fungible-token](https://github.com/gear-academy/fungible-token) which permit to create utility token `DAO`
-- DAO contract [https://github.com/gear-academy/dao-light](https://github.com/gear-academy/dao-light)
+- Fundible Token [https://github.com/gear-dapps/fungible-token](https://github.com/gear-dapps/fungible-token) which permit to create utility token `DAO`
+- DAO contract [https://github.com/gear-dapps/dao-light](https://github.com/gear-dapps/dao-light)
 
 # Getting Started
 
@@ -23,7 +23,7 @@ REACT_APP_CONTRACT_DAO
 - `REACT_APP_CONTRACT_ERC` is Fundible Token contract address
 - `RREACT_APP_CONTRACT_DAO` is DAO contract address
 
-An example is available: [here](https://github.com/gear-academy/dao-app/blob/master/.env.example)
+An example is available: [here](https://github.com/gear-dapps/dao-app/blob/master/.env.example)
 
 ## To run
 
